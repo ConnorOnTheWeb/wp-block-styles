@@ -1,0 +1,141 @@
+# wp-block-styles
+
+Comprehensive CSS for WordPress Gutenberg block classes rendered via the **WP REST API** in headless Next.js, Nuxt, SvelteKit, Astro, or any other front-end framework.
+
+Unlike `@wordpress/base-styles` — which pulls in the full WP editor design system — this package is a **lean, renderer-focused stylesheet** with zero dependencies and no JavaScript.
+
+## Why this package?
+
+When you render WordPress content via the REST API, none of the block styles come with it — just raw HTML with Gutenberg's `wp-block-*` class names and no stylesheet to make sense of them. WordPress's own `@wordpress/base-styles` package exists but pulls in the entire editor design system, which is built for the admin UI, not for rendering on an arbitrary front-end.
+
+This package is the missing piece: a standalone, zero-dependency CSS file that targets exactly the classes Gutenberg emits in rendered post content. It handles layout-breaking edge cases like full-bleed images, responsive embed ratios, and float-aligned figures — the things that quietly break in production and are tedious to track down one by one.
+
+## Installation
+
+```bash
+npm install wp-block-styles
+# or
+yarn add wp-block-styles
+# or
+pnpm add wp-block-styles
+```
+
+## Usage
+
+### Global (recommended for most projects)
+
+Import once in your app's root layout and all WP content is styled everywhere:
+
+```js
+// Next.js: app/layout.tsx or pages/_app.js
+import 'wp-block-styles'
+```
+
+### Scoped to a single page
+
+If WP content only lives on a few routes:
+
+```js
+// pages/[slug].tsx or app/posts/[slug]/page.tsx
+import 'wp-block-styles'
+```
+
+Next.js deduplicates CSS imports — even if multiple pages import this file, it only ships once in the bundle.
+
+### With a wrapper class (fully scoped, zero bleed)
+
+All selectors are also prefixed with `.wp-content`. Wrap your rendered post HTML in a div with that class to ensure nothing leaks into the rest of your layout:
+
+```jsx
+import 'wp-block-styles'
+
+export default function Post({ content }) {
+  return (
+    <article
+      className="wp-content"
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
+  )
+}
+```
+
+## Customization via CSS Custom Properties
+
+Override the built-in variables in your global CSS to theme the stylesheet without forking it:
+
+```css
+:root {
+  --wp-content-max-width: 780px;    /* content column width */
+  --wp-wide-max-width: 1200px;      /* alignwide breakout width */
+  --wp-gap: 1.5rem;                 /* spacing between block elements */
+  --wp-border-color: #e2e2e2;       /* borders on tables, separators, etc. */
+  --wp-code-bg: #1e1e1e;            /* code block background */
+  --wp-code-color: #f8f8f2;         /* code block text */
+  --wp-blockquote-border: #888;     /* blockquote left border color */
+  --wp-pullquote-border: currentColor;
+  --wp-caption-color: #6b6b6b;      /* captions and meta text */
+}
+```
+
+## What's covered
+
+All current WordPress core block types as of Gutenberg 21.x / WordPress 6.9:
+
+| Category | Blocks |
+|---|---|
+| Text | Paragraph, Heading, List, Code, Preformatted, Verse/Poetry, Footnotes |
+| Media | Image, Gallery, Video, Audio, Cover, Media & Text, File |
+| Embeds | All oEmbed types with aspect ratio variants (16:9, 4:3, 1:1, 9:16, 21:9) |
+| Design | Columns, Group, Separator, Spacer, Buttons, Table, Details/Accordion |
+| Text | Math (MathML/LaTeX) — new in WP 6.9 |
+| Quotes | Blockquote (default + large style), Pullquote (default + solid style) |
+| Widgets | Latest Posts, Latest Comments, Search |
+| Social Embeds | Twitter/X pre-load blockquote, Instagram, TikTok iframe overrides |
+| Misc | Social Icons, Navigation (reset), Classic/Legacy Editor output |
+| Utilities | Alignment (alignwide, alignfull, alignleft, alignright), text-align helpers, color & font-size palette classes |
+
+## Caching
+
+This file is static and side-effect free. If you self-host it, use aggressive caching:
+
+```
+Cache-Control: public, max-age=31536000, immutable
+```
+
+If imported via npm, your bundler (webpack, Turbopack, Vite) handles content-hash cache busting automatically on version updates.
+
+## Contributing
+
+Issues and PRs welcome at [github.com/connorontheweb/wp-block-styles](https://github.com/connorontheweb/wp-block-styles).
+
+When WordPress adds new core blocks, open an issue or submit a PR adding the relevant `.wp-block-*` selectors.
+
+## License
+
+MIT
+
+## Minified build
+
+A pre-minified version is included in the package:
+
+```js
+import 'wp-block-styles/index.min.css'
+```
+
+To regenerate the minified file after edits:
+
+```bash
+npm run build
+```
+
+## Dark mode
+
+Dark mode is handled automatically via `@media (prefers-color-scheme: dark)`. The stylesheet overrides border colors, code block backgrounds, table headers, and caption colors when the user's OS is in dark mode. Override the CSS custom properties in your own stylesheet to customize the dark theme.
+
+## Print
+
+Print styles are included via `@media print`. Embeds are replaced with a `[Embedded media — view online]` placeholder, buttons and social icons are hidden, float alignments are cleared so nothing overflows the page, and links display their full URL after the anchor text.
+
+## Testing
+
+Open `test.html` directly in a browser to visually verify all block types at once. No build step or server required — it loads `index.css` via a relative path and uses placeholder images from picsum.photos.

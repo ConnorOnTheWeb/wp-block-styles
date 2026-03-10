@@ -1,0 +1,46 @@
+{
+  "name": "wp-block-styles",
+  "version": "1.0.0",
+  "description": "Comprehensive CSS styles for WordPress Gutenberg block classes rendered via the headless WP REST API. Zero dependencies, framework agnostic.",
+  "style": "index.css",
+  "main": "index.css",
+  "exports": {
+    ".": "./index.css",
+    "./index.css": "./index.css",
+    "./min": "./index.min.css",
+    "./index.min.css": "./index.min.css"
+  },
+  "files": [
+    "index.css",
+    "index.min.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npx clean-css-cli index.css -o index.min.css --output-sourceMap"
+  },
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "wp-rest-api",
+    "headless-wordpress",
+    "nextjs",
+    "css",
+    "blocks",
+    "wp-block",
+    "headless-cms"
+  ],
+  "author": "Connor <connor@connorontheweb.com> (https://connorontheweb.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/connorontheweb/wp-block-styles.git"
+  },
+  "bugs": {
+    "url": "https://github.com/connorontheweb/wp-block-styles/issues"
+  },
+  "homepage": "https://github.com/connorontheweb/wp-block-styles#readme",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3"
+  }
+}
