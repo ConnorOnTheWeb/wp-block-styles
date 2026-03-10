@@ -235,6 +235,7 @@
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.875em;
   background: #f4f4f4;
+  color: #1a1a1a;
   padding: 0.15em 0.4em;
   border-radius: 3px;
 }
@@ -1346,6 +1347,7 @@ blockquote.twitter-tweet a {
   :root:not([data-theme="light"]) .wp-content p code,
   :root:not([data-theme="light"]) .wp-content li code {
     background: #1a1a1a;
+    color: #f8f8f2;
   }
 
   :root:not([data-theme="light"]) .wp-block-latest-comments__comment {
@@ -1387,6 +1389,7 @@ blockquote.twitter-tweet a {
 [data-theme="dark"] .wp-content p code,
 [data-theme="dark"] .wp-content li code {
   background: #1a1a1a;
+  color: #f8f8f2;
 }
 
 [data-theme="dark"] .wp-block-latest-comments__comment {
