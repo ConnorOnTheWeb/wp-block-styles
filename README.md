@@ -1,6 +1,6 @@
 # wp-block-styles
 
-Comprehensive CSS for WordPress Gutenberg block classes rendered via the headless **WP REST API** in Next.js, React, Nuxt, Vue, SvelteKit, Svelte, Astro, or any other front-end framework.
+Comprehensive CSS for WordPress Gutenberg block classes rendered via the headless **WP REST API** in Next.js, React, Nuxt, Vue, SvelteKit, Svelte, Astro, TanStack or any other front-end framework.
 
 Unlike `@wordpress/base-styles` — which pulls in the full WP editor design system — this package is a **lean, renderer-focused stylesheet** with zero dependencies and no JavaScript.
 
