@@ -22,3 +22,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Social embed overrides for Twitter/X, Instagram, and TikTok (pre-load blockquote state + iframe wrapper fixes)
 - Nested list styles: disc → circle → square (unordered), decimal → lower-latin → lower-roman (ordered)
 - `a:visited` state on `.wp-content` links
+
+## [1.0.2] — 2025-03-10
+
+### Added
+- Updated README.md
