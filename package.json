@@ -34,7 +34,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/connorontheweb/wp-block-styles.git"
+    "url": "git+https://github.com/connorontheweb/wp-block-styles.git"
   },
   "bugs": {
     "url": "https://github.com/connorontheweb/wp-block-styles/issues"
