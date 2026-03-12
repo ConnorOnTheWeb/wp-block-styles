@@ -251,7 +251,7 @@
 .wp-block-code code {
   background: transparent !important;
   color: inherit !important;
-  padding: 0;
+  padding: 12px;
   border-radius: 0;
   font-size: inherit;
 }
