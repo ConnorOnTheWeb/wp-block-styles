@@ -56,9 +56,18 @@
   --wp-border-color: #e2e2e2;
   --wp-code-bg: #1e1e1e;
   --wp-code-color: #f8f8f2;
+  --wp-inline-code-bg: #f4f4f4;
+  --wp-inline-code-color: #1a1a1a;
   --wp-blockquote-border: #888;
   --wp-pullquote-border: currentColor;
   --wp-caption-color: #6b6b6b;
+  --wp-button-bg: #333;
+  --wp-button-color: #fff;
+  --wp-input-bg: #fff;
+  --wp-input-color: inherit;
+  --wp-scrollbar-color: #555;
+  --wp-surface-bg: #f9f9f9;
+  --wp-surface-alt-bg: #f5f5f5;
 }
 
 /* ─── 1. Reset & Base ───────────────────────────────────────────────────────── */
@@ -211,7 +220,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: thin;
-  scrollbar-color: #555 var(--wp-code-bg);
+  scrollbar-color: var(--wp-scrollbar-color) var(--wp-code-bg);
 }
 
 .wp-block-code::-webkit-scrollbar {
@@ -224,7 +233,7 @@
 }
 
 .wp-block-code::-webkit-scrollbar-thumb {
-  background-color: #555;
+  background-color: var(--wp-scrollbar-color);
   border-radius: 10px;
 }
 
@@ -241,16 +250,16 @@
 .wp-content code {
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.875em;
-  background: #f4f4f4 !important;
-  color: #1a1a1a !important;
+  background: var(--wp-inline-code-bg);
+  color: var(--wp-inline-code-color);
   padding: 0.15em 0.4em;
   border-radius: 3px;
 }
 
 /* Block code overrides the inline code reset above */
 .wp-block-code code {
-  background: transparent !important;
-  color: inherit !important;
+  background: transparent;
+  color: inherit;
   padding: 12px;
   border-radius: 0;
   font-size: inherit;
@@ -336,8 +345,8 @@
 }
 
 .wp-block-pullquote.is-style-solid-color {
-  background: #333;
-  color: #fff;
+  background: var(--wp-button-bg);
+  color: var(--wp-button-color);
   padding: 2rem;
 }
 
@@ -692,8 +701,8 @@
 .wp-block-button__link {
   display: inline-block;
   padding: 0.65em 1.4em;
-  background: #333;
-  color: #fff;
+  background: var(--wp-button-bg);
+  color: var(--wp-button-color);
   text-decoration: none;
   border-radius: 4px;
   font-weight: 600;
@@ -719,8 +728,8 @@
 }
 
 .wp-block-button.is-style-fill .wp-block-button__link {
-  background: #333;
-  color: #fff;
+  background: var(--wp-button-bg);
+  color: var(--wp-button-color);
 }
 
 /* ─── 13. Table ──────────────────────────────────────────────────────────────  */
@@ -744,12 +753,12 @@
 }
 
 .wp-block-table th {
-  background: #f5f5f5 !important;
+  background: var(--wp-surface-alt-bg);
   font-weight: 700;
 }
 
 .wp-block-table.is-style-stripes tbody tr:nth-child(odd) td {
-  background: #f9f9f9;
+  background: var(--wp-surface-bg);
 }
 
 .wp-block-table.is-style-stripes th,
@@ -821,8 +830,8 @@
 .wp-block-file .wp-block-file__button {
   display: inline-block;
   padding: 0.5em 1em;
-  background: #333;
-  color: #fff;
+  background: var(--wp-button-bg);
+  color: var(--wp-button-color);
   text-decoration: none;
   border-radius: 4px;
   font-size: 0.85em;
@@ -853,7 +862,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f9f9f9 !important;
+  background: var(--wp-surface-bg);
 }
 
 .wp-block-details > summary::-webkit-details-marker {
@@ -895,7 +904,7 @@
   padding: 0.9rem 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  background: #f9f9f9 !important;
+  background: var(--wp-surface-bg);
   user-select: none;
 }
 
@@ -1047,14 +1056,14 @@ blockquote.twitter-tweet a {
   border: none;
   font-size: 1em;
   outline: none;
-  background: #fff !important;
-  color: inherit;
+  background: var(--wp-input-bg);
+  color: var(--wp-input-color);
 }
 
 .wp-block-search__button {
   padding: 0.6rem 1rem;
-  background: #333;
-  color: #fff;
+  background: var(--wp-button-bg);
+  color: var(--wp-button-color);
   border: none;
   cursor: pointer;
   font-size: 0.9em;
@@ -1335,40 +1344,21 @@ blockquote.twitter-tweet a {
     --wp-border-color: #333;
     --wp-code-bg: #111;
     --wp-code-color: #f8f8f2;
+    --wp-inline-code-bg: #1a1a1a;
+    --wp-inline-code-color: #f8f8f2;
     --wp-blockquote-border: #555;
-    --wp-caption-color: #999;
-  }
-
-  :root:not([data-theme="light"]) .wp-block-table th {
-    background: #1a1a1a;
+    --wp-caption-color: #aaa;
+    --wp-button-bg: #555;
+    --wp-button-color: #fff;
+    --wp-input-bg: #1a1a1a;
+    --wp-input-color: #f0f0f0;
+    --wp-scrollbar-color: #666;
+    --wp-surface-bg: #1a1a1a;
+    --wp-surface-alt-bg: #1a1a1a;
   }
 
   :root:not([data-theme="light"]) .wp-block-table.is-style-stripes tbody tr:nth-child(odd) td {
     background: #161616;
-  }
-
-  :root:not([data-theme="light"]) .wp-block-details > summary,
-  :root:not([data-theme="light"]) .wp-block-accordion-heading {
-    background: #1a1a1a;
-  }
-
-  :root:not([data-theme="light"]) .wp-block-search__input {
-    background: #1a1a1a;
-    color: inherit;
-  }
-
-  :root:not([data-theme="light"]) .wp-block-file {
-    border-color: #333;
-  }
-
-  :root:not([data-theme="light"]) .wp-content code {
-    background: #1a1a1a !important;
-    color: #f8f8f2 !important;
-  }
-
-  :root:not([data-theme="light"]) .wp-block-code code {
-    background: transparent !important;
-    color: inherit !important;
   }
 
   :root:not([data-theme="light"]) .wp-block-latest-comments__comment {
@@ -1381,40 +1371,21 @@ blockquote.twitter-tweet a {
   --wp-border-color: #333;
   --wp-code-bg: #111;
   --wp-code-color: #f8f8f2;
+  --wp-inline-code-bg: #1a1a1a;
+  --wp-inline-code-color: #f8f8f2;
   --wp-blockquote-border: #555;
-  --wp-caption-color: #999;
-}
-
-[data-theme="dark"] .wp-block-table th {
-  background: #1a1a1a;
+  --wp-caption-color: #aaa;
+  --wp-button-bg: #555;
+  --wp-button-color: #fff;
+  --wp-input-bg: #1a1a1a;
+  --wp-input-color: #f0f0f0;
+  --wp-scrollbar-color: #666;
+  --wp-surface-bg: #1a1a1a;
+  --wp-surface-alt-bg: #1a1a1a;
 }
 
 [data-theme="dark"] .wp-block-table.is-style-stripes tbody tr:nth-child(odd) td {
   background: #161616;
-}
-
-[data-theme="dark"] .wp-block-details > summary,
-[data-theme="dark"] .wp-block-accordion-heading {
-  background: #1a1a1a;
-}
-
-[data-theme="dark"] .wp-block-search__input {
-  background: #1a1a1a;
-  color: inherit;
-}
-
-[data-theme="dark"] .wp-block-file {
-  border-color: #333;
-}
-
-[data-theme="dark"] .wp-content code {
-  background: #1a1a1a !important;
-  color: #f8f8f2 !important;
-}
-
-[data-theme="dark"] .wp-block-code code {
-  background: transparent !important;
-  color: inherit !important;
 }
 
 [data-theme="dark"] .wp-block-latest-comments__comment {

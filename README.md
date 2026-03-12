@@ -61,19 +61,56 @@ export default function Post({ content }) {
 
 ## Customization via CSS Custom Properties
 
-Override the built-in variables in your global CSS to theme the stylesheet without forking it:
+Override any of the built-in variables in your global CSS to theme the stylesheet without forking it:
 
 ```css
 :root {
-  --wp-content-max-width: 780px;    /* content column width */
-  --wp-wide-max-width: 1200px;      /* alignwide breakout width */
-  --wp-gap: 1.5rem;                 /* spacing between block elements */
-  --wp-border-color: #e2e2e2;       /* borders on tables, separators, etc. */
-  --wp-code-bg: #1e1e1e;            /* code block background */
-  --wp-code-color: #f8f8f2;         /* code block text */
-  --wp-blockquote-border: #888;     /* blockquote left border color */
-  --wp-pullquote-border: currentColor;
-  --wp-caption-color: #6b6b6b;      /* captions and meta text */
+  /* Layout */
+  --wp-content-max-width: 860px;       /* content column width */
+  --wp-wide-max-width: 1200px;         /* alignwide breakout width */
+  --wp-gap: 1.5rem;                    /* spacing between block elements */
+
+  /* Borders */
+  --wp-border-color: #e2e2e2;          /* tables, separators, file block, etc. */
+
+  /* Code blocks */
+  --wp-code-bg: #1e1e1e;               /* fenced code block background */
+  --wp-code-color: #f8f8f2;            /* fenced code block text */
+
+  /* Inline code */
+  --wp-inline-code-bg: #f4f4f4;        /* inline <code> background */
+  --wp-inline-code-color: #1a1a1a;     /* inline <code> text */
+
+  /* Quotes */
+  --wp-blockquote-border: #888;        /* blockquote left border */
+  --wp-pullquote-border: currentColor; /* pullquote top/bottom border */
+
+  /* Captions & meta text */
+  --wp-caption-color: #6b6b6b;         /* figcaptions, cite, post dates */
+
+  /* Buttons & interactive elements */
+  --wp-button-bg: #333;                /* button, file download, search button */
+  --wp-button-color: #fff;             /* button text */
+
+  /* Form inputs */
+  --wp-input-bg: #fff;                 /* search input background */
+  --wp-input-color: inherit;           /* search input text */
+
+  /* Surfaces */
+  --wp-surface-bg: #f9f9f9;            /* details/accordion header, stripe rows */
+  --wp-surface-alt-bg: #f5f5f5;        /* table header background */
+
+  /* Scrollbar */
+  --wp-scrollbar-color: #555;          /* code block scrollbar thumb */
+}
+```
+
+All variables are overridden automatically in dark mode. You can also target dark mode specifically:
+
+```css
+[data-theme="dark"] {
+  --wp-button-bg: #4a4a4a;
+  --wp-inline-code-bg: #2a2a2a;
 }
 ```
 
