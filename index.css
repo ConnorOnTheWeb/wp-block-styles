@@ -857,6 +857,7 @@
   padding: 0.9rem 1.1rem;
   cursor: pointer;
   font-weight: 600;
+  -webkit-user-select: none;
   user-select: none;
   list-style: none;
   display: flex;
@@ -905,6 +906,7 @@
   font-weight: 600;
   cursor: pointer;
   background: var(--wp-surface-bg);
+  -webkit-user-select: none;
   user-select: none;
 }
 

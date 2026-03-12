@@ -17,7 +17,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "npx clean-css-cli index.css -o index.min.css --output-sourceMap"
+    "build": "npx clean-css-cli index.css -o index.min.css"
   },
   "keywords": [
     "wordpress",
