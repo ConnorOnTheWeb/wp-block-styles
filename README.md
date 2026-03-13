@@ -256,3 +256,14 @@ WordPress injects per-service background colors via its own frontend stylesheet,
 ### Checkmark list class name (`is-style-checkmark-list`)
 
 The Gutenberg editor emits `is-style-checkmark-list` for the checkmark list style. Earlier versions of this package targeted `is-style-checked-list` instead. Both are now supported for backwards compatibility.
+
+### Drop cap class inconsistency
+
+WordPress sometimes emits `has-drop-cap` on a paragraph without the accompanying `wp-block-paragraph` class. This package targets both forms so drop caps render correctly either way:
+
+```css
+.wp-block-paragraph.has-drop-cap::first-letter,
+.has-drop-cap::first-letter { ... }
+```
+
+No action needed — this is handled automatically.

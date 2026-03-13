@@ -100,7 +100,8 @@
   margin-bottom: 1.25rem;
 }
 
-.wp-block-paragraph.has-drop-cap::first-letter {
+.wp-block-paragraph.has-drop-cap::first-letter,
+.has-drop-cap::first-letter {
   float: left;
   font-size: 4em;
   line-height: 0.68;
