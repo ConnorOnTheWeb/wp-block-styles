@@ -66,6 +66,8 @@
   --wp-input-bg: #fff;
   --wp-input-color: inherit;
   --wp-scrollbar-color: #555;
+  --wp-link-color: #2563eb;
+  --wp-link-visited-color: #7c3aed;
   --wp-surface-bg: #f9f9f9;
   --wp-surface-alt-bg: #f5f5f5;
 }
@@ -86,10 +88,16 @@
 
 .wp-content a {
   word-wrap: break-word;
+  color: var(--wp-link-color, #2563eb);
+  text-decoration: underline;
+}
+
+.wp-content a:hover {
+  opacity: 0.8;
 }
 
 .wp-content a:visited {
-  opacity: 0.8;
+  color: var(--wp-link-visited-color, #7c3aed);
 }
 
 /* ─── 2. Typography ─────────────────────────────────────────────────────────── */
