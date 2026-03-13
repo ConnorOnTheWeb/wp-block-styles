@@ -20,6 +20,14 @@ yarn add wp-block-styles
 pnpm add wp-block-styles
 ```
 
+## Learn More
+
+This package emerged from years of solving the same styling gaps when pulling WordPress content via REST API.
+
+- **[Styling the WordPress REST API in Next.js, React, and Beyond](https://connorontheweb.com/styling-wordpress-rest-api-headless-wp-block-styles)** — Launch post explaining the problem and why wp-block-styles exists (March 2026)
+- **[Building a head for the WordPress REST API with Nuxt JS](https://connorontheweb.com/building-a-head-for-the-wordpress-rest-api-with-nuxt-js)** — Original approach to the styling problem (November 2021)
+- **[Interactive demo with live examples](https://connorontheweb.com/packages/wp-block-styles)** — See every block type rendered with wp-block-styles
+
 ## Usage
 
 ### Global (recommended for most projects)

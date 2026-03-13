@@ -39,7 +39,7 @@
   "bugs": {
     "url": "https://github.com/connorontheweb/wp-block-styles/issues"
   },
-  "homepage": "https://github.com/connorontheweb/wp-block-styles#readme",
+  "homepage": "https://connorontheweb.com/packages/wp-block-styles",
   "devDependencies": {
     "clean-css-cli": "^5.6.3"
   }
