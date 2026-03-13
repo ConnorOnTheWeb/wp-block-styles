@@ -188,11 +188,13 @@
   list-style-type: lower-roman;
 }
 
+.wp-block-list.is-style-checkmark-list,
 .wp-block-list.is-style-checked-list {
   list-style: none;
   padding-left: 0;
 }
 
+.wp-block-list.is-style-checkmark-list li::before,
 .wp-block-list.is-style-checked-list li::before {
   content: "✓ ";
   font-weight: 700;
@@ -348,9 +350,19 @@
   background: var(--wp-button-bg);
   color: var(--wp-button-color);
   padding: 2rem;
+  border-color: transparent;
 }
 
 .wp-block-pullquote.is-style-solid-color a {
+  color: #fff;
+}
+
+.wp-block-pullquote.is-style-solid-color cite {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.wp-block-pullquote.is-style-solid-color code {
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
@@ -396,6 +408,8 @@
   list-style: none;
 }
 
+.wp-block-gallery.columns-default,
+.wp-block-gallery.is-layout-flex { display: grid; }
 .wp-block-gallery.columns-1 { grid-template-columns: 1fr; }
 .wp-block-gallery.columns-2 { grid-template-columns: repeat(2, 1fr); }
 .wp-block-gallery.columns-3 { grid-template-columns: repeat(3, 1fr); }
@@ -564,8 +578,10 @@
   padding: 1rem;
 }
 
-.wp-block-media-text.is-stacked-on-mobile {
-  grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .wp-block-media-text.is-stacked-on-mobile {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
@@ -912,16 +928,47 @@
 }
 
 .wp-block-accordion-heading {
-  padding: 0.9rem 1.1rem;
+  padding: 0;
   font-weight: 600;
   cursor: pointer;
   background: var(--wp-surface-bg);
   -webkit-user-select: none;
   user-select: none;
+  margin: 0;
 }
 
+.wp-block-accordion-heading__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  background: none;
+  border: none;
+  font-size: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.wp-block-accordion-heading__toggle-icon {
+  flex-shrink: 0;
+  margin-left: 1rem;
+  font-size: 1.2em;
+  font-weight: 300;
+}
+
+/* The Interactivity API toggles inert and .is-open in a live WP environment.
+   In headless, the API script does not run so panels stay inert/hidden.
+   We override inert with display:block so content remains accessible. */
 .wp-block-accordion-panel {
   padding: 1rem 1.1rem;
+}
+
+.wp-block-accordion-panel[inert] {
+  display: block;
+  pointer-events: auto;
 }
 
 /* ─── 17. Social Icons ───────────────────────────────────────────────────────  */
@@ -954,9 +1001,23 @@
 }
 
 .wp-block-social-link svg {
-  width: 1em;
-  height: 1em;
+  width: 1.1rem;
+  height: 1.1rem;
   fill: currentColor;
+  display: block;
+  flex-shrink: 0;
+}
+
+.wp-block-social-link-label.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Pill style */
@@ -973,6 +1034,26 @@
 
 /* Default colors */
 .wp-block-social-link-anchor { color: #fff; }
+
+/* Default fallback background — WordPress normally injects inline colors per service */
+.wp-block-social-link { background: #444; }
+
+/* Per-service brand colors */
+.wp-social-link-facebook { background: #1877f2; }
+.wp-social-link-twitter,
+.wp-social-link-x { background: #000; }
+.wp-social-link-instagram { background: #e1306c; }
+.wp-social-link-linkedin { background: #0a66c2; }
+.wp-social-link-youtube { background: #ff0000; }
+.wp-social-link-github { background: #24292e; }
+.wp-social-link-tiktok { background: #010101; }
+.wp-social-link-pinterest { background: #e60023; }
+.wp-social-link-snapchat { background: #fffc00; color: #000; }
+.wp-social-link-tumblr { background: #35465c; }
+.wp-social-link-reddit { background: #ff4500; }
+.wp-social-link-spotify { background: #1db954; }
+.wp-social-link-mastodon { background: #6364ff; }
+.wp-social-link-chain { background: #444; }
 
 /* ─── 17b. Social Embed Overrides (Twitter/X, Instagram, TikTok) ─────────────  */
 

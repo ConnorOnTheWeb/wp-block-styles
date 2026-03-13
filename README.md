@@ -176,3 +176,75 @@ Print styles are included via `@media print`. Embeds are replaced with a `[Embed
 ## Testing
 
 Open `test.html` directly in a browser to visually verify all block types at once. No build step or server required — it loads `index.css` via a relative path and uses placeholder images from picsum.photos.
+
+## Headless quirks & known issues
+
+### Cover block child element duplication
+
+In some WordPress configurations, `content.rendered` outputs the cover block's child elements — the background image, overlay span, and inner container — both inside **and** outside the `.wp-block-cover` wrapper. This is a WordPress block renderer bug; `wp-block-styles` cannot fix it with CSS alone.
+
+If you encounter it, sanitize `content.rendered` before passing it to `dangerouslySetInnerHTML`:
+
+```js
+import { parse } from 'node-html-parser'
+
+function cleanCoverBlocks(html) {
+  const root = parse(html)
+  root.querySelectorAll('img.wp-block-cover__image-background').forEach(el => {
+    if (!el.closest('.wp-block-cover')) el.remove()
+  })
+  root.querySelectorAll('.wp-block-cover__background').forEach(el => {
+    if (!el.closest('.wp-block-cover')) el.remove()
+  })
+  root.querySelectorAll('.wp-block-cover__inner-container').forEach(el => {
+    if (!el.closest('.wp-block-cover')) el.remove()
+  })
+  return root.toString()
+}
+
+// Usage
+const content = cleanCoverBlocks(post.content.rendered)
+```
+
+Install `node-html-parser` separately — it is not a dependency of this package.
+
+### Cover block image not visible (object-fit)
+
+WordPress applies `object-fit` to cover block images via a frontend script (`wp-polyfill-object-fit`) that does not run in headless environments. This package applies `object-fit: cover` directly via CSS attribute selectors so the image fills the container without that script:
+
+```css
+.wp-block-cover__image-background[data-object-fit="cover"] { object-fit: cover; }
+.wp-block-cover__image-background[data-object-fit="contain"] { object-fit: contain; }
+```
+
+`object-position` focal points (set via `data-object-position`) cannot be polyfilled with CSS alone since `attr()` is not yet supported for non-`content` properties in current browsers. The inline `style` attribute WordPress emits (`style="object-position: 52% 64%"`) handles this automatically — no workaround needed.
+
+### Accordion block interactivity (wp-block-accordion)
+
+The Accordion block (`core/accordion`, added in WordPress 6.7) uses the WordPress Interactivity API (`@wordpress/interactivity`) to toggle panels open and closed. This script does not run in headless environments, so all panels render with the `inert` attribute and stay hidden.
+
+`wp-block-styles` overrides `inert` with `display: block` so panel content remains accessible:
+
+```css
+.wp-block-accordion-panel[inert] {
+  display: block;
+  pointer-events: auto;
+}
+```
+
+This means accordions render as fully expanded static sections rather than interactive collapsed panels. If you need interactive accordions in headless, either:
+
+- Use the **Details block** (`core/details`) instead — it uses native HTML `<details>`/`<summary>` elements with no JavaScript required
+- Wire up your own toggle with a small client-side script targeting `.wp-block-accordion-heading__toggle`
+
+### Conflict with Tailwind Typography (`prose`)
+
+Do not apply Tailwind's `prose` class to the same element as `wp-content`. The `@tailwindcss/typography` plugin processes and re-renders HTML content in a way that duplicates block elements and conflicts with `wp-block-styles` selectors on nearly every element. Use one or the other — `wp-block-styles` is the correct choice for rendering WordPress `content.rendered` output.
+
+### Social icons brand colors
+
+WordPress injects per-service background colors via its own frontend stylesheet, which does not load in headless. `wp-block-styles` includes fallback brand colors for all common services (`wp-social-link-github`, `wp-social-link-youtube`, `wp-social-link-twitter`, etc.) so icons render correctly without WordPress's stylesheet.
+
+### Checkmark list class name (`is-style-checkmark-list`)
+
+The Gutenberg editor emits `is-style-checkmark-list` for the checkmark list style. Earlier versions of this package targeted `is-style-checked-list` instead. Both are now supported for backwards compatibility.
