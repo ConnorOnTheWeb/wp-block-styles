@@ -606,6 +606,16 @@
   z-index: 0;
 }
 
+/* WordPress sets data-object-fit via a frontend script that doesn't run in headless.
+   These rules ensure cover images are positioned correctly without that script. */
+.wp-block-cover__image-background[data-object-fit="cover"] {
+  object-fit: cover;
+}
+
+.wp-block-cover__image-background[data-object-fit="contain"] {
+  object-fit: contain;
+}
+
 .wp-block-cover__background,
 .wp-block-cover-image__background {
   position: absolute;
