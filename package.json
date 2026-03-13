@@ -1,6 +1,6 @@
 {
   "name": "wp-block-styles",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Comprehensive CSS styles for WordPress Gutenberg block classes rendered via the headless WP REST API. Zero dependencies, framework agnostic.",
   "style": "index.css",
   "main": "index.css",
