@@ -771,16 +771,20 @@
 .wp-block-table {
   margin: 1.75rem 0;
   overflow-x: auto;
+  display: block;
+  width: 100%;
 }
 
 .wp-block-table table {
-  width: 100%;
+  width: max-content;
   border-collapse: collapse;
   font-size: 0.95em;
 }
 
 .wp-block-table th,
 .wp-block-table td {
+  width: max-content;
+  max-width: 160px;
   padding: 0.6rem 0.9rem;
   border: 1px solid var(--wp-border-color);
   text-align: left;
