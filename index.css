@@ -973,15 +973,14 @@
 }
 
 /* The Interactivity API toggles inert and .is-open in a live WP environment.
-   In headless, the API script does not run so panels stay inert/hidden.
-   We override inert with display:block so content remains accessible. */
+   In headless, a small vanilla JS accordion handler manages inert/open state.
+   The [inert] panel is hidden until JS opens it. */
 .wp-block-accordion-panel {
   padding: 1rem 1.1rem;
 }
 
 .wp-block-accordion-panel[inert] {
-  display: block;
-  pointer-events: auto;
+  display: none;
 }
 
 /* ─── 17. Social Icons ───────────────────────────────────────────────────────  */
@@ -1121,7 +1120,6 @@ blockquote.twitter-tweet a {
   position: static;
   width: 100% !important;
   max-width: 550px;
-  height: auto !important;
 }
 
 /* Instagram */
