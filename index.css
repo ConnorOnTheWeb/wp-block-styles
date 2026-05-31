@@ -39,12 +39,19 @@
  *   19. Latest Posts / Latest Comments
  *   20. Math (MathML / LaTeX)
  *   21. Navigation (minimal reset)
- *   22. Alignment Utilities (alignwide, alignfull, alignleft, alignright)
- *   23. Has-text-align helpers
- *   24. Color & Gradient utility classes
- *   25. Legacy / Classic Editor classes
- *   26. Dark Mode  (@media prefers-color-scheme: dark) + [data-theme="dark"]
- *   27. Print      (@media print)
+ *   22. RSS Block
+ *   23. Icon  (WordPress 7.0)
+ *   24. Breadcrumbs  (WordPress 7.0)
+ *   25. Navigation Overlay Close  (WordPress 7.0)
+ *   26. Tabs  (experimental — WordPress 7.0)
+ *   27. Playlist  (experimental — WordPress 7.0)
+ *   28. Form  (experimental — WordPress 7.0)
+ *   29. Alignment Utilities (alignwide, alignfull, alignleft, alignright)
+ *   30. Has-text-align helpers
+ *   31. Color & Gradient utility classes
+ *   32. Legacy / Classic Editor classes
+ *   33. Dark Mode  (@media prefers-color-scheme: dark) + [data-theme="dark"]
+ *   34. Print      (@media print)
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -784,7 +791,7 @@
 .wp-block-table th,
 .wp-block-table td {
   width: max-content;
-  max-width: 160px;
+  max-width: 320px;
   padding: 0.6rem 0.9rem;
   border: 1px solid var(--wp-border-color);
   text-align: left;
@@ -973,14 +980,16 @@
 }
 
 /* The Interactivity API toggles inert and .is-open in a live WP environment.
-   In headless, a small vanilla JS accordion handler manages inert/open state.
-   The [inert] panel is hidden until JS opens it. */
+   In headless, the Interactivity API does not run, so panels remain with the
+   inert attribute. Override inert so all panels display as expanded static
+   sections — no content is hidden. */
 .wp-block-accordion-panel {
   padding: 1rem 1.1rem;
 }
 
 .wp-block-accordion-panel[inert] {
-  display: none;
+  display: block;
+  pointer-events: auto;
 }
 
 /* ─── 17. Social Icons ───────────────────────────────────────────────────────  */
@@ -1238,7 +1247,7 @@ blockquote.twitter-tweet a {
   color: var(--wp-caption-color);
 }
 
-/* ─── 20. Math (MathML / LaTeX) — new in WordPress 6.9 ──────────────────────  */
+/* ─── 20. Math (MathML / LaTeX) ──────────────────────────────────────────────  */
 
 /*
  * The Math block renders MathML markup with wp-block-math as its wrapper.
@@ -1292,7 +1301,372 @@ blockquote.twitter-tweet a {
   display: block;
 }
 
-/* ─── 21. Alignment Utilities ────────────────────────────────────────────────  */
+/* ─── 22. RSS Block ──────────────────────────────────────────────────────────  */
+.wp-block-rss {
+  padding: 0;
+  list-style: none;
+  margin: 1.75rem 0;
+}
+
+.wp-block-rss__item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--wp-border-color);
+}
+
+.wp-block-rss__item:last-child {
+  border-bottom: none;
+}
+
+.wp-block-rss__item-title {
+  font-weight: 600;
+  text-decoration: none;
+  display: block;
+}
+
+.wp-block-rss__item-title:hover {
+  text-decoration: underline;
+}
+
+.wp-block-rss__item-publish-date {
+  font-size: 0.8em;
+  color: var(--wp-caption-color);
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.wp-block-rss__item-author {
+  font-size: 0.8em;
+  color: var(--wp-caption-color);
+  display: block;
+}
+
+.wp-block-rss__item-excerpt {
+  font-size: 0.9em;
+  margin-top: 0.35rem;
+}
+
+.wp-block-rss.is-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--wp-gap);
+}
+
+/* ─── 23. Icon (WordPress 7.0) ───────────────────────────────────────────────  */
+
+/*
+ * The Icon block (core/icon) renders an inline SVG wrapped in
+ * <figure class="wp-block-icon">. WordPress injects width/height via inline
+ * styles; these rules provide layout defaults and ensure the SVG fills
+ * currentColor for theme-driven coloring.
+ */
+
+.wp-block-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25rem 0;
+}
+
+.wp-block-icon figure {
+  margin: 0;
+  display: inline-flex;
+}
+
+.wp-block-icon svg {
+  display: block;
+  width: 48px;
+  height: 48px;
+  fill: currentColor;
+  max-width: 100%;
+}
+
+/* ─── 24. Breadcrumbs (WordPress 7.0) ────────────────────────────────────────  */
+
+/*
+ * The Breadcrumbs block (core/breadcrumbs) renders a <nav> containing a
+ * sequence of links separated by a configurable separator character.
+ */
+
+.wp-block-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 1rem 0;
+  font-size: 0.9em;
+  padding: 0;
+}
+
+.wp-block-breadcrumbs ol,
+.wp-block-breadcrumbs ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.wp-block-breadcrumbs li {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+}
+
+.wp-block-breadcrumbs .wp-block-breadcrumbs__separator,
+.wp-block-breadcrumbs [aria-hidden="true"] {
+  padding: 0 0.3rem;
+  color: var(--wp-caption-color);
+}
+
+.wp-block-breadcrumbs a {
+  text-decoration: none;
+}
+
+.wp-block-breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.wp-block-breadcrumbs .wp-block-breadcrumbs__current {
+  color: var(--wp-caption-color);
+}
+
+/* ─── 25. Navigation Overlay Close (WordPress 7.0) ──────────────────────────  */
+
+/*
+ * The Navigation Overlay Close block (core/navigation-overlay-close) renders
+ * a <button> that dismisses the mobile navigation overlay. In headless
+ * environments the overlay is JS-driven; these styles reset the button
+ * and provide a sensible baseline appearance.
+ */
+
+.wp-block-navigation-overlay-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 1em;
+  line-height: 1;
+  border-radius: 4px;
+}
+
+.wp-block-navigation-overlay-close:hover {
+  opacity: 0.75;
+}
+
+/* ─── 26. Tabs — experimental (WordPress 7.0) ───────────────────────────────  */
+
+/*
+ * The Tabs block (core/tabs) requires the Interactivity API to toggle panels.
+ * In headless environments the Interactivity API does not run, so all panels
+ * render statically. These rules display all panels stacked so no content
+ * is hidden. If you add the Interactivity API to your headless project,
+ * remove the .wp-block-tab-panel override and let [hidden] manage visibility.
+ */
+
+.wp-block-tabs {
+  margin: 1.75rem 0;
+}
+
+.wp-block-tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 2px solid var(--wp-border-color);
+  padding: 0;
+  margin: 0 0 1rem;
+  list-style: none;
+}
+
+.wp-block-tab {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.wp-block-tab[aria-selected="true"],
+.wp-block-tab.is-active {
+  border-bottom-color: currentColor;
+}
+
+.wp-block-tab-panels {
+  position: relative;
+}
+
+/* Headless fallback: all panels visible and stacked */
+.wp-block-tab-panel {
+  display: block;
+  padding: 1rem 0;
+}
+
+.wp-block-tab-panel + .wp-block-tab-panel {
+  border-top: 1px solid var(--wp-border-color);
+}
+
+/* When Interactivity API is active it sets [hidden] on inactive panels */
+.wp-block-tab-panel[hidden] {
+  display: none;
+}
+
+/* ─── 27. Playlist — experimental (WordPress 7.0) ───────────────────────────  */
+
+.wp-block-playlist {
+  margin: 1.75rem 0;
+  border: 1px solid var(--wp-border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.wp-block-playlist figcaption,
+.wp-block-playlist .wp-element-caption {
+  font-size: 0.85em;
+  color: var(--wp-caption-color);
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.wp-block-playlist-track {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--wp-border-color);
+  cursor: pointer;
+}
+
+.wp-block-playlist-track:last-child {
+  border-bottom: none;
+}
+
+.wp-block-playlist-track:hover {
+  background: var(--wp-surface-bg);
+}
+
+.wp-block-playlist-track img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.wp-block-playlist-track__title {
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.wp-block-playlist-track__artist,
+.wp-block-playlist-track__album {
+  font-size: 0.8em;
+  color: var(--wp-caption-color);
+}
+
+.wp-block-playlist-track__length {
+  margin-left: auto;
+  font-size: 0.85em;
+  color: var(--wp-caption-color);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* ─── 28. Form — experimental (WordPress 7.0) ───────────────────────────────  */
+
+.wp-block-form {
+  margin: 1.75rem 0;
+}
+
+.wp-block-form-input {
+  margin-bottom: 1rem;
+}
+
+.wp-block-form-input label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9em;
+  margin-bottom: 0.35rem;
+}
+
+.wp-block-form-input input,
+.wp-block-form-input textarea,
+.wp-block-form-input select {
+  width: 100%;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--wp-border-color);
+  border-radius: 4px;
+  background: var(--wp-input-bg);
+  color: var(--wp-input-color);
+  font-size: 1em;
+  font-family: inherit;
+}
+
+.wp-block-form-input input:focus,
+.wp-block-form-input textarea:focus,
+.wp-block-form-input select:focus {
+  outline: 2px solid var(--wp-link-color);
+  outline-offset: -1px;
+}
+
+.wp-block-form-input textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.wp-block-form-submit-button {
+  margin-top: 0.5rem;
+}
+
+.wp-block-form-submit-button button,
+.wp-block-form-submit-button input[type="submit"] {
+  display: inline-block;
+  padding: 0.65em 1.4em;
+  background: var(--wp-button-bg);
+  color: var(--wp-button-color);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.wp-block-form-submit-button button:hover,
+.wp-block-form-submit-button input[type="submit"]:hover {
+  opacity: 0.85;
+}
+
+.wp-block-form-submission-notification {
+  padding: 0.9rem 1.1rem;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+.wp-block-form-submission-notification[data-type="success"] {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+
+.wp-block-form-submission-notification[data-type="error"] {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+/* ─── 29. Alignment Utilities ────────────────────────────────────────────────  */
 
 /* Wide alignment — breaks slightly past content column */
 .alignwide {
@@ -1345,12 +1719,12 @@ blockquote.twitter-tweet a {
   }
 }
 
-/* ─── 22. Text Align Helpers ─────────────────────────────────────────────────  */
+/* ─── 30. Text Align Helpers ─────────────────────────────────────────────────  */
 .has-text-align-left  { text-align: left; }
 .has-text-align-center { text-align: center; }
 .has-text-align-right  { text-align: right; }
 
-/* ─── 23. Color & Background Utility Classes ─────────────────────────────────  */
+/* ─── 31. Color & Background Utility Classes ─────────────────────────────────  */
 
 /* WP generates inline styles for custom colors, but also emits utility classes
    for its named palette. We provide neutral fallbacks so layout isn't broken. */
@@ -1398,7 +1772,7 @@ blockquote.twitter-tweet a {
 .has-xx-large-font-size { font-size: 2.4em; }
 .has-huge-font-size   { font-size: 2.8em; }
 
-/* ─── 24. Legacy / Classic Editor Classes ────────────────────────────────────  */
+/* ─── 32. Legacy / Classic Editor Classes ────────────────────────────────────  */
 
 /* Classic block (raw TinyMCE output from pre-Gutenberg content) */
 .wp-block-freeform {
@@ -1425,9 +1799,7 @@ blockquote.twitter-tweet a {
   margin: 0.35rem 0 0;
 }
 
-/* ─── End of wp-block-styles.css ─────────────────────────────────────────────  */
-
-/* ─── 25. Dark Mode ──────────────────────────────────────────────────────────  */
+/* ─── 33. Dark Mode ──────────────────────────────────────────────────────────  */
 /*
  * Dark mode is applied in two ways:
  *   1. Automatically via OS preference:  @media (prefers-color-scheme: dark)
@@ -1496,7 +1868,7 @@ blockquote.twitter-tweet a {
   border-bottom-color: #333;
 }
 
-/* ─── 26. Print ──────────────────────────────────────────────────────────────  */
+/* ─── 34. Print ──────────────────────────────────────────────────────────────  */
 @media print {
   /* Remove interactive / screen-only blocks */
   .wp-block-buttons,

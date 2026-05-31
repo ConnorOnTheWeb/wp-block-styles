@@ -124,19 +124,20 @@ All variables are overridden automatically in dark mode. You can also target dar
 
 ## What's covered
 
-All current WordPress core block types as of Gutenberg 21.x / WordPress 6.9:
+All current WordPress core block types as of WordPress 7.0 "Armstrong":
 
 | Category | Blocks |
 |---|---|
 | Text | Paragraph, Heading, List, Code, Preformatted, Verse/Poetry, Footnotes |
 | Media | Image, Gallery, Video, Audio, Cover, Media & Text, File |
 | Embeds | All oEmbed types with aspect ratio variants (16:9, 4:3, 1:1, 9:16, 21:9) |
-| Design | Columns, Group, Separator, Spacer, Buttons, Table, Details/Accordion |
-| Text | Math (MathML/LaTeX) — new in WP 6.9 |
+| Design | Columns, Group, Separator, Spacer, Buttons, Table, Details/Accordion, Tabs (experimental) |
+| Text | Math (MathML/LaTeX) |
 | Quotes | Blockquote (default + large style), Pullquote (default + solid style) |
-| Widgets | Latest Posts, Latest Comments, Search |
+| Widgets | Latest Posts, Latest Comments, Search, RSS |
 | Social Embeds | Twitter/X pre-load blockquote, Instagram, TikTok iframe overrides |
 | Misc | Social Icons, Navigation (reset), Classic/Legacy Editor output |
+| New in 7.0 | Icon, Breadcrumbs, Navigation Overlay Close, Playlist (experimental), Form (experimental) |
 | Utilities | Alignment (alignwide, alignfull, alignleft, alignright), text-align helpers, color & font-size palette classes |
 
 ## Caching
