@@ -5,7 +5,7 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.20] — 2026-05-30
+## [1.0.21] — 2026-05-30
 
 - WordPress 7.0 "Armstrong" support: added CSS for new stable blocks — Icon (`core/icon`), Breadcrumbs (`core/breadcrumbs`), Navigation Overlay Close (`core/navigation-overlay-close`)
 - Added CSS for experimental WP 7.0 blocks — Tabs, Playlist, Form
