@@ -1,6 +1,6 @@
 {
   "name": "wp-block-styles",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "Comprehensive CSS styles for WordPress Gutenberg block classes rendered via the headless WP REST API. Zero dependencies, framework agnostic.",
   "style": "index.css",
   "main": "index.css",
@@ -17,7 +17,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "npx clean-css-cli index.css -o index.min.css"
+    "build": "npx clean-css-cli index.css -o index.min.css",
+    "test:tables": "node tests/tables.test.mjs"
   },
   "keywords": [
     "wordpress",
@@ -41,6 +42,7 @@
   },
   "homepage": "https://connorontheweb.com/packages/wp-block-styles",
   "devDependencies": {
-    "clean-css-cli": "^5.6.3"
+    "clean-css-cli": "^5.6.3",
+    "playwright": "^1.63.0"
   }
 }

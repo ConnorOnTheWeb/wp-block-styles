@@ -108,6 +108,12 @@ Override any of the built-in variables in your global CSS to theme the styleshee
   --wp-surface-bg: #f9f9f9;            /* details/accordion header, stripe rows */
   --wp-surface-alt-bg: #f5f5f5;        /* table header background */
 
+  /* Tables */
+  --wp-table-col-min: 5em;             /* narrowest a column gets before the table scrolls */
+  --wp-table-col-min-narrow: 8em;      /* same, for 4+ column tables in phone-width containers */
+  --wp-table-stripe-bg: var(--wp-surface-bg);       /* is-style-stripes odd rows */
+  --wp-table-sticky-bg: var(--wp-surface-alt-bg);   /* sticky first column on phones */
+
   /* Scrollbar */
   --wp-scrollbar-color: #555;          /* code block scrollbar thumb */
 }
@@ -139,6 +145,18 @@ All current WordPress core block types as of WordPress 7.0 "Armstrong":
 | Misc | Social Icons, Navigation (reset), Classic/Legacy Editor output |
 | New in 7.0 | Icon, Breadcrumbs, Navigation Overlay Close, Playlist (experimental), Form (experimental) |
 | Utilities | Alignment (alignwide, alignfull, alignleft, alignright), text-align helpers, color & font-size palette classes |
+
+## Tables
+
+Tables are tuned to show as much as possible without becoming unreadable:
+
+- **Fill the column, wrap at words.** Tables use the full content width and wrap only between words, never mid-word (long URLs inside links are the one exception).
+- **Scroll instead of squeeze.** Each column has a minimum width (`--wp-table-col-min`). When a table can't fit without squeezing columns below it, the table scrolls sideways rather than stacking words in skinny columns. Tables with three or fewer columns always fit on a phone; wider ones get a roomier floor there (`--wp-table-col-min-narrow`).
+- **Type scales with the space.** Table text steps down smoothly from `0.95em` in a full desktop column to about `0.75em` (never below 13px) in a phone-width column. This is based on the table's container, not the viewport, so it works in sidebars and columns too.
+- **On phones, labels stay put.** In narrow containers the first column sticks while the rest scrolls, and the trailing edge fades while there's more to see (Chrome, Edge and Safari 26+; other browsers simply scroll).
+- **Equal-width columns are ignored.** WordPress's "Fixed width table cells" option (`has-fixed-layout`) is on by default and forces every column to the same width, so auto layout is used regardless.
+
+Print output shows the full table with no scroll container.
 
 ## Caching
 
@@ -185,6 +203,16 @@ Print styles are included via `@media print`. Embeds are replaced with a `[Embed
 ## Testing
 
 Open `test.html` directly in a browser to visually verify all block types at once. No build step or server required — it loads `index.css` via a relative path and uses placeholder images from picsum.photos.
+
+Table layout has automated checks. `tests/tables.html` holds fixture tables (long headers, many columns, prose, URLs, numbers), each declaring the viewport width it must fit from and how many lines a cell may wrap to. The test renders them in Chromium, WebKit and Firefox at 320–1440px and fails on mid-word breaks, page-level horizontal scroll, tables that scroll when they should fit, runaway cell wrapping, text under 13px, or a sticky column or caption that drifts while scrolling:
+
+```bash
+npx playwright install chromium webkit firefox   # once
+npm run test:tables
+BROWSERS=webkit WIDTHS=390 npm run test:tables  # narrow the run
+```
+
+Screenshots for a visual pass are written to `tests/screenshots/`.
 
 ## Headless quirks & known issues
 

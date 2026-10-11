@@ -5,6 +5,18 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.22] — 2026-10-11
+
+- Tables fill the content column instead of sizing to their content, so tables that previously scrolled on desktop now fit
+- Table cells no longer split words mid-way (they inherited `word-break: break-word` from `.wp-content`)
+- Per-column minimum width (`--wp-table-col-min`, `--wp-table-col-min-narrow`): tables scroll sideways rather than squeezing columns into tall, narrow stacks
+- Table text scales with the table's container width (`0.95em` → ~`0.75em`, 13px minimum)
+- Phone-width tables: sticky first column, trailing-edge scroll fade (where `animation-timeline` is supported), caption stays in view while scrolling
+- `has-fixed-layout` equal-width columns are overridden in favor of auto layout
+- Striped row color moved to `--wp-table-stripe-bg` (dark mode now sets the variable instead of overriding selectors); added `--wp-table-sticky-bg`
+- Print: tables render in full without the scroll container, fade or sticky column
+- Added `tests/tables.html` fixtures and `npm run test:tables` (Playwright, Chromium/WebKit/Firefox)
+
 ## [1.0.21] — 2026-05-30
 
 - WordPress 7.0 "Armstrong" support: added CSS for new stable blocks — Icon (`core/icon`), Breadcrumbs (`core/breadcrumbs`), Navigation Overlay Close (`core/navigation-overlay-close`)

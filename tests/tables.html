@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table Fixtures</title>
+<link rel="stylesheet" href="../index.css">
+<style>
+  /* Stand-in for a host site: page gutter and body type only */
+  body { margin: 0; padding: 0 16px; font: 18px/1.6 -apple-system, system-ui, sans-serif; background: #fff; color: #1a1a1a; }
+  @media (prefers-color-scheme: dark) { body { background: #111827; color: #e5e7eb; } }
+  h1 { font-size: 1.25rem; }
+</style>
+</head>
+<body>
+<!--
+  Fixtures for tests/tables.test.mjs. Open directly in a browser to eyeball.
+  Per-table expectations read by the test:
+    data-fit-from   viewport width (px) at and above which the table must not scroll
+    data-max-lines  most lines any body cell may wrap to, at every viewport
+                    (#prose allows 11: at 320px a sentence-long cell beats sideways-scrolling prose)
+-->
+<main class="wp-content">
+<h1>wp-block-table fixtures</h1>
+
+<figure class="wp-block-table" id="comparison" data-fit-from="768" data-max-lines="5">
+  <table class="has-fixed-layout">
+    <thead><tr><th>Annual, United States</th><th>All foodborne illness (CDC estimate)</th><th>Raw milk and cheese (Costard estimate)</th><th>Raw milk and cheese, high-end overestimate (all sporadic cases counted)</th></tr></thead>
+    <tbody>
+      <tr><td>People exposed</td><td>about 330 million (all Americans)</td><td>about 11 million (adult raw milk drinkers)</td><td>about 11 million (adult raw milk drinkers)</td></tr>
+      <tr><td>Illnesses</td><td>9.9 million</td><td>about 730</td><td>about 19,000</td></tr>
+      <tr><td>Illness rate per person exposed</td><td>about 3%</td><td>about 0.007%</td><td>about 0.2%</td></tr>
+      <tr><td>Hospitalizations</td><td>about 53,000</td><td>about 21</td><td>not estimated</td></tr>
+    </tbody>
+  </table>
+  <figcaption class="wp-element-caption">Comparison: long headers, short values</figcaption>
+</figure>
+
+<figure class="wp-block-table is-style-stripes" id="seven-col" data-fit-from="1024" data-max-lines="3">
+  <table class="has-fixed-layout">
+    <thead><tr><th>State</th><th>Retail sales</th><th>Farm sales</th><th>Herdshare</th><th>Pet food only</th><th>Labeling requirement</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>California</td><td>Legal</td><td>Legal</td><td>Not addressed</td><td>No</td><td>Warning label required</td><td>Licensed dairies only, regular testing</td></tr>
+      <tr><td>New York</td><td>Illegal</td><td>Legal with permit</td><td>Not addressed</td><td>No</td><td>Sign at point of sale</td><td>On-farm only</td></tr>
+      <tr><td>Michigan</td><td>Illegal</td><td>Illegal</td><td>Legal</td><td>No</td><td>None</td><td>Herdshare agreements must be written</td></tr>
+    </tbody>
+  </table>
+  <figcaption class="wp-element-caption">Seven columns, stripes</figcaption>
+</figure>
+
+<figure class="wp-block-table" id="prose" data-fit-from="320" data-max-lines="11">
+  <table class="has-fixed-layout">
+    <thead><tr><th>Study</th><th>Year</th><th>Finding</th></tr></thead>
+    <tbody>
+      <tr><td>Costard et al.</td><td>2017</td><td>Estimated outbreak illness from raw milk and cheese after adjusting for underreporting, using a model that accounts for the ratio of sporadic to outbreak cases observed in surveillance data.</td></tr>
+      <tr><td>Minnesota DoH</td><td>2013</td><td>Sporadic illnesses among raw milk drinkers outnumbered outbreak cases by about 25 to 1.</td></tr>
+    </tbody>
+  </table>
+  <figcaption class="wp-element-caption">One long prose column</figcaption>
+</figure>
+
+<figure class="wp-block-table" id="long-words" data-fit-from="390" data-max-lines="3">
+  <table class="has-fixed-layout">
+    <thead><tr><th>Source</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr><td>CDC estimates</td><td><a href="https://www.cdc.gov/foodborneburden/estimates-overview.html">https://www.cdc.gov/foodborneburden/estimates-overview.html</a></td></tr>
+      <tr><td>Interstate regulation</td><td>Pasteurization/Homogenization requirements (Grade&nbsp;A)</td></tr>
+    </tbody>
+  </table>
+  <figcaption class="wp-element-caption">Bare URL and long compound words</figcaption>
+</figure>
+
+<figure class="wp-block-table" id="simple" data-fit-from="320" data-max-lines="2">
+  <table>
+    <thead><tr><th>Block Name</th><th>Category</th><th>Has Style Variants</th></tr></thead>
+    <tbody>
+      <tr><td>Paragraph</td><td>Text</td><td>Yes</td></tr>
+      <tr><td>Image</td><td>Media</td><td>Yes</td></tr>
+      <tr><td>Columns</td><td>Design</td><td>No</td></tr>
+    </tbody>
+  </table>
+  <figcaption class="wp-element-caption">Small three-column table</figcaption>
+</figure>
+
+<figure class="wp-block-table" id="no-thead" data-fit-from="320" data-max-lines="4">
+  <table>
+    <tbody>
+      <tr><td>Milk fat</td><td>3.5–4% for Holstein, 4.5–5% for Jersey herds</td></tr>
+      <tr><td>Shelf life</td><td>7 to 10 days refrigerated at or below 4&nbsp;°C</td></tr>
+    </tbody>
+  </table>
+  <figcaption class="wp-element-caption">Key/value pairs, no header section</figcaption>
+</figure>
+
+<figure class="wp-block-table" id="ten-col" data-fit-from="1024" data-max-lines="2">
+  <table>
+    <thead><tr><th>Year</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Total</th></tr></thead>
+    <tbody>
+      <tr><td>2023</td><td>1,204</td><td>1,180</td><td>1,322</td><td>1,410</td><td>1,505</td><td>1,620</td><td>1,688</td><td>1,702</td><td>11,631</td></tr>
+      <tr><td>2024</td><td>1,310</td><td>1,295</td><td>1,401</td><td>1,522</td><td>1,610</td><td>1,733</td><td>1,790</td><td>1,812</td><td>12,473</td></tr>
+    </tbody>
+    <tfoot><tr><td>Change</td><td>+8.8%</td><td>+9.7%</td><td>+6.0%</td><td>+7.9%</td><td>+7.0%</td><td>+7.0%</td><td>+6.0%</td><td>+6.5%</td><td>+7.2%</td></tr></tfoot>
+  </table>
+  <figcaption class="wp-element-caption">Ten numeric columns with a footer (expected to scroll on small screens)</figcaption>
+</figure>
+</main>
+</body>
+</html>
