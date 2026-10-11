@@ -5,23 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Table Fixtures</title>
 <link rel="stylesheet" href="../index.css">
-<style>
-  /* Stand-in for a host site: page gutter and body type only */
-  body { margin: 0; padding: 0 16px; font: 18px/1.6 -apple-system, system-ui, sans-serif; background: #fff; color: #1a1a1a; }
-  @media (prefers-color-scheme: dark) { body { background: #111827; color: #e5e7eb; } }
-  h1 { font-size: 1.25rem; }
-</style>
+<link rel="stylesheet" href="assets/host.css">
+<script src="assets/host.js"></script>
 </head>
 <body>
 <!--
-  Fixtures for tests/tables.test.mjs. Open directly in a browser to eyeball.
+  Table layout fixtures for tests/run.mjs. Open directly in a browser to eyeball.
   Per-table expectations read by the test:
     data-fit-from   viewport width (px) at and above which the table must not scroll
     data-max-lines  most lines any body cell may wrap to, at every viewport
                     (#prose allows 11: at 320px a sentence-long cell beats sideways-scrolling prose)
 -->
-<main class="wp-content">
-<h1>wp-block-table fixtures</h1>
+<header class="host-bar">
+  <h1>wp-block-styles</h1>
+  <nav>
+    <a href="index.html">All blocks</a>
+    <a href="tables.html" aria-current="page">Tables</a>
+  </nav>
+  <div class="host-toggle" role="group" aria-label="Color scheme"></div>
+</header>
+
+<p class="host-intro">Table layout edge cases. Each table declares the viewport width it must fit from and how many lines a cell may wrap to; <code>npm test</code> checks both.</p>
+
+<main class="host-section">
+<div class="wp-content">
 
 <figure class="wp-block-table" id="comparison" data-fit-from="768" data-max-lines="5">
   <table class="has-fixed-layout">
@@ -103,6 +110,7 @@
   </table>
   <figcaption class="wp-element-caption">Ten numeric columns with a footer (expected to scroll on small screens)</figcaption>
 </figure>
+</div>
 </main>
 </body>
 </html>
