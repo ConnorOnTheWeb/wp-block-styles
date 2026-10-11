@@ -5,8 +5,48 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0] — 2026-10-11
 
+Breaking: dark mode follows the host site instead of the visitor's OS. See "Upgrading to 2.0" in the README.
+
+### Changed
+- Colors follow the page's `color-scheme` via `light-dark()`: light by default, dark when the site declares `color-scheme: dark` / `light dark` or sets `data-theme="dark"`. Light-only sites no longer get dark table headers, stripes or summaries for visitors in OS dark mode. The `prefers-color-scheme` overrides are gone
+- Content link styles no longer apply to buttons, file download buttons or social icons (buttons rendered with blue, underlined text, turning purple once visited)
+- Content list styles (bullets, indent) only apply to List blocks and plain lists, not the lists other blocks use as containers (social icons, latest posts, RSS, footnotes, playlist)
+- Links inside blocks with their own text or background color follow that color
+- Buttons redesigned: consistent sizing for filled and outline styles, focus ring, no hardcoded hover color
+- Palette, gradient and font-size classes read WordPress's `--wp--preset--*` variables when present and use `!important` like WordPress
+- Dark-mode link, caption, button and surface colors meet WCAG AA
+
+### Added
+- WordPress layout classes: `is-layout-flex` (row/stack, justification, no-wrap), `is-layout-grid`, `is-layout-constrained`
+- Buttons: alignment (`is-content-justification-*`) and width (`wp-block-button__width-25/50/75/100`)
+- Cover: overlay opacity (`has-background-dim-*`), default black overlay, content position classes
+- Columns: vertical alignment classes; no wrapping from 782px, matching WordPress
+- Media & Text: WordPress's grid, vertical alignment, crop-to-fill images
+- Social icons: WordPress's colors for every service, icon size classes, visible labels, logos-only colors
+- Gallery: WordPress's column behavior (2 on phones, chosen count from 600px), working crop
+- Search: button-inside variant and keyboard focus ring (previously removed by `outline: none`)
+- Latest posts and RSS grid column counts; latest comments avatar layout
+- `.screen-reader-text`, previously only hidden inside social icons, so labels and "Read more" context showed on screen
+- Default gradient classes, border color classes and `kbd` styling
+- New variables: `--wp-radius`, `--wp-font-mono`, `--wp-focus-color`
+
+### Fixed
+- Accordion and Tabs: panels WordPress marks `hidden` are shown, since the script that opens them doesn't run in headless (the 1.0.21 fix targeted `inert`, which WordPress doesn't use)
+- Tabs styles target the real markup (`.wp-block-tab-list button`); the `.wp-block-tab` class doesn't exist
+- Breadcrumbs separators, drawn from WordPress's `--separator` variable
+- Embeds: the fixed 16:9 box only applies to embeds WordPress marks with an aspect ratio, so rich embeds are no longer cut off
+- Palette-colored blocks no longer lose their padding (a `[class*="-background-color"]` rule reset it)
+- Centered and side-aligned images shrink to the image, so centering and captions line up
+- Media & Text no longer stacks on mobile when "Stack on mobile" is off
+- File block styles target the real markup; Icon block styles target its `<div>`
+- Playlist tracks reset the browser's default button styling
+
+### Removed
+- Form block styles (not a core block)
+
+### Tests
 - Test pages moved to `tests/`: `tests/index.html` replaces `test.html`, uses the markup WordPress actually emits for every block, covers the WordPress 7.0 blocks, and loads local images instead of picsum.photos
 - Test pages act as their own host: they follow the OS color scheme, with a System / Light / Dark toggle
 - `npm test` (replaces `npm run test:tables`) adds contrast checks in light and dark, page overflow checks, and checks for hidden or visible screen-reader content across all test pages

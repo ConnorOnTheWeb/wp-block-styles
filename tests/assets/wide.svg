@@ -3,5 +3,5 @@
   <rect width="1600" height="700" fill="url(#g)"/>
   <circle cx="1152" cy="210" r="84" fill="#fff" fill-opacity=".25"/>
   <path d="M0 700 L560 385 L960 560 L1280 434 L1600 595 L1600 700 Z" fill="#000" fill-opacity=".2"/>
-  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, sans-serif" font-size="49" fill="#fff" fill-opacity=".85">1600 × 700</text>
+  <text x="97%" y="95%" text-anchor="end" font-family="system-ui, sans-serif" font-size="49" fill="#fff" fill-opacity=".85">1600 × 700</text>
 </svg>

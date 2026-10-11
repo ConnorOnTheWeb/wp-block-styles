@@ -120,7 +120,8 @@
   <h2 class="host-label">Pullquote <code>core/pullquote</code></h2>
   <div class="wp-content">
     <figure class="wp-block-pullquote"><blockquote><p>A pullquote draws the eye to a key passage.</p><cite>Attribution</cite></blockquote></figure>
-    <figure class="wp-block-pullquote has-white-color has-vivid-cyan-blue-background-color has-text-color has-background"><blockquote><p>Pullquote with palette colors.</p><cite>Attribution</cite></blockquote></figure>
+    <!-- data-test-allow: white on the default palette's vivid cyan blue is the author's color choice -->
+    <figure class="wp-block-pullquote has-white-color has-vivid-cyan-blue-background-color has-text-color has-background" data-test-allow="contrast"><blockquote><p>Pullquote with palette colors.</p><cite>Attribution</cite></blockquote></figure>
     <figure class="wp-block-pullquote is-style-solid-color"><blockquote><p>Solid color style variation (older themes).</p><cite>Attribution</cite></blockquote></figure>
   </div>
 </section>
@@ -440,7 +441,8 @@ over harbor and city.</pre>
       <li class="wp-social-link wp-social-link-github wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg><span class="wp-block-social-link-label screen-reader-text">GitHub</span></a></li>
       <li class="wp-social-link wp-social-link-youtube wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M9 7v10l8-5z"/></svg><span class="wp-block-social-link-label screen-reader-text">YouTube</span></a></li>
     </ul>
-    <ul class="wp-block-social-links has-visible-labels is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex">
+    <!-- data-test-allow: labels sit on WordPress's brand colors, kept as-is (white on Mastodon blue is 3.7:1) -->
+    <ul class="wp-block-social-links has-visible-labels is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex" data-test-allow="contrast">
       <li class="wp-social-link wp-social-link-github wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg><span class="wp-block-social-link-label">GitHub</span></a></li>
       <li class="wp-social-link wp-social-link-mastodon wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect x="5" y="5" width="14" height="14" rx="4"/></svg><span class="wp-block-social-link-label">Mastodon</span></a></li>
     </ul>

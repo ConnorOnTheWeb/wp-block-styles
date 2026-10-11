@@ -50,9 +50,9 @@ import 'wp-block-styles'
 
 Next.js deduplicates CSS imports — even if multiple pages import this file, it only ships once in the bundle.
 
-### With a wrapper class (fully scoped, zero bleed)
+### The `.wp-content` wrapper
 
-All selectors are also prefixed with `.wp-content`. Wrap your rendered post HTML in a div with that class to ensure nothing leaks into the rest of your layout:
+Block styles target the classes WordPress puts in its markup (`wp-block-*`, plus the layout, alignment and palette classes), so they work wherever you render block HTML. Element-level styles (paragraphs, headings, lists, links, inline code) only apply inside a `.wp-content` wrapper, so they never touch the rest of your layout. Wrap your rendered post HTML in it:
 
 ```jsx
 import 'wp-block-styles'
@@ -67,84 +67,112 @@ export default function Post({ content }) {
 }
 ```
 
+## Light and dark
+
+The stylesheet follows your site's color scheme. It's light unless your page says it supports dark, so a light-only site never gets dark tables or boxes just because a visitor's OS is in dark mode. To opt in:
+
+```css
+/* Follow the visitor's OS setting */
+:root { color-scheme: light dark; }
+
+/* Or always dark */
+:root { color-scheme: dark; }
+```
+
+For a theme toggle, set `data-theme="dark"` or `data-theme="light"` on `<html>` (or any element, to theme just that section). The stylesheet maps it to `color-scheme`, which also switches the browser's own form controls and scrollbars to match:
+
+```js
+document.documentElement.dataset.theme = 'dark'
+```
+
+Colors use CSS [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark) (Chrome/Edge 123+, Safari 17.5+, Firefox 120+). Older browsers get the light colors.
+
 ## Customization via CSS Custom Properties
 
-Override any of the built-in variables in your global CSS to theme the stylesheet without forking it:
+Override any of the built-in variables in your global CSS to theme the stylesheet without forking it. A plain value applies in both light and dark; use `light-dark()` to set each:
+
+```css
+:root {
+  --wp-button-bg: #0f766e;                        /* same in light and dark */
+  --wp-link-color: light-dark(#0f766e, #5eead4);  /* light, dark */
+}
+```
+
+All variables, with their light defaults:
 
 ```css
 :root {
   /* Layout */
   --wp-content-max-width: 860px;       /* content column width */
   --wp-wide-max-width: 1200px;         /* alignwide breakout width */
-  --wp-gap: 1.5rem;                    /* spacing between block elements */
+  --wp-gap: 1.5rem;                    /* gap in columns, rows, grids and galleries */
+  --wp-radius: 6px;                    /* buttons, inputs, code, details, file block */
+
+  /* Type */
+  --wp-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Links and focus */
+  --wp-link-color: #2563eb;
+  --wp-link-visited-color: #7c3aed;
+  --wp-focus-color: #2563eb;           /* keyboard focus ring */
 
   /* Borders */
   --wp-border-color: #e2e2e2;          /* tables, separators, file block, etc. */
 
   /* Code blocks */
-  --wp-code-bg: #1e1e1e;               /* fenced code block background */
-  --wp-code-color: #f8f8f2;            /* fenced code block text */
+  --wp-code-bg: #1e1e1e;               /* code and preformatted blocks */
+  --wp-code-color: #f8f8f2;
+  --wp-scrollbar-color: #555;          /* code block scrollbar thumb */
 
   /* Inline code */
-  --wp-inline-code-bg: #f4f4f4;        /* inline <code> background */
-  --wp-inline-code-color: #1a1a1a;     /* inline <code> text */
+  --wp-inline-code-bg: #f0f0f0;
+  --wp-inline-code-color: inherit;
 
   /* Quotes */
-  --wp-blockquote-border: #888;        /* blockquote left border */
+  --wp-blockquote-border: #888;        /* quote and verse left border */
   --wp-pullquote-border: currentColor; /* pullquote top/bottom border */
 
   /* Captions & meta text */
-  --wp-caption-color: #6b6b6b;         /* figcaptions, cite, post dates */
+  --wp-caption-color: #646464;         /* figcaptions, cite, post dates */
 
-  /* Buttons & interactive elements */
-  --wp-button-bg: #333;                /* button, file download, search button */
-  --wp-button-color: #fff;             /* button text */
+  /* Buttons */
+  --wp-button-bg: #1f2328;             /* buttons, file download, search button */
+  --wp-button-color: #fff;
 
   /* Form inputs */
-  --wp-input-bg: #fff;                 /* search input background */
-  --wp-input-color: inherit;           /* search input text */
+  --wp-input-bg: #fff;                 /* search input */
+  --wp-input-color: inherit;
 
   /* Surfaces */
-  --wp-surface-bg: #f9f9f9;            /* details/accordion header, stripe rows */
-  --wp-surface-alt-bg: #f5f5f5;        /* table header background */
+  --wp-surface-bg: #f7f7f7;            /* details summary, accordion headings, stripes */
+  --wp-surface-alt-bg: #f2f2f2;        /* table header, current playlist track */
 
   /* Tables */
   --wp-table-col-min: 5em;             /* narrowest a column gets before the table scrolls */
   --wp-table-col-min-narrow: 8em;      /* same, for 4+ column tables in phone-width containers */
-  --wp-table-stripe-bg: var(--wp-surface-bg);       /* is-style-stripes odd rows */
-  --wp-table-sticky-bg: var(--wp-surface-alt-bg);   /* sticky first column on phones */
-
-  /* Scrollbar */
-  --wp-scrollbar-color: #555;          /* code block scrollbar thumb */
+  --wp-table-stripe-bg: var(--wp-surface-bg);   /* is-style-stripes odd rows */
+  --wp-table-sticky-bg: #f2f2f2;       /* sticky first column on phones (must be opaque) */
 }
 ```
 
-All variables are overridden automatically in dark mode. You can also target dark mode specifically:
-
-```css
-[data-theme="dark"] {
-  --wp-button-bg: #4a4a4a;
-  --wp-inline-code-bg: #2a2a2a;
-}
-```
+WordPress palette and font-size classes (`has-vivid-red-color`, `has-large-font-size`, …) read WordPress's own `--wp--preset--*` variables when your page defines them, for example from a theme.json export, and fall back to WordPress's defaults otherwise.
 
 ## What's covered
 
-All current WordPress core block types as of WordPress 7.0 "Armstrong":
+Core blocks as of WordPress 7.0 "Armstrong", checked against the markup WordPress emits:
 
 | Category | Blocks |
 |---|---|
-| Text | Paragraph, Heading, List, Code, Preformatted, Verse/Poetry, Footnotes |
-| Media | Image, Gallery, Video, Audio, Cover, Media & Text, File |
-| Embeds | All oEmbed types with aspect ratio variants (16:9, 4:3, 1:1, 9:16, 21:9) |
-| Design | Columns, Group, Separator, Spacer, Buttons, Table, Details/Accordion, Tabs (experimental) |
-| Text | Math (MathML/LaTeX) |
-| Quotes | Blockquote (default + large style), Pullquote (default + solid style) |
-| Widgets | Latest Posts, Latest Comments, Search, RSS |
-| Social Embeds | Twitter/X pre-load blockquote, Instagram, TikTok iframe overrides |
-| Misc | Social Icons, Navigation (reset), Classic/Legacy Editor output |
-| New in 7.0 | Icon, Breadcrumbs, Navigation Overlay Close, Playlist (experimental), Form (experimental) |
-| Utilities | Alignment (alignwide, alignfull, alignleft, alignright), text-align helpers, color & font-size palette classes |
+| Text | Paragraph, Heading, List, Quote (default, large), Pullquote, Code, Preformatted, Verse, Footnotes, Math |
+| Media | Image, Gallery, Video, Audio, Cover, Media & Text, File, Playlist |
+| Embeds | Video and audio embeds with every aspect ratio WordPress uses; rich embeds (X/Twitter, Bluesky, …) before their scripts load; Instagram and TikTok |
+| Design | Columns, Group (stack, row, grid), Buttons, Table, Separator, Spacer, Details, Accordion, Tabs |
+| Widgets | Latest Posts, Latest Comments, RSS, Search, Social Icons, Breadcrumbs, Icon |
+| Layout | WordPress's layout classes (`is-layout-flex`, `is-layout-grid`, `is-layout-constrained`, justification, vertical alignment), which headless content gets without the CSS WordPress normally generates for them |
+| Utilities | Alignment (`alignwide`, `alignfull`, `alignleft`, `alignright`, `aligncenter`), text alignment, default palette colors, gradients and font sizes, `.screen-reader-text` |
+| Classic | Legacy `[caption]` shortcode output |
+
+Not styled: site-building blocks that don't appear in post content (navigation menus, query loops, post templates, site title/logo), and widget blocks such as Archives, Categories, Tag Cloud and Calendar.
 
 ## Tables
 
@@ -191,10 +219,6 @@ To regenerate the minified file after edits:
 ```bash
 npm run build
 ```
-
-## Dark mode
-
-Dark mode is handled automatically via `@media (prefers-color-scheme: dark)`. The stylesheet overrides border colors, code block backgrounds, table headers, and caption colors when the user's OS is in dark mode. Override the CSS custom properties in your own stylesheet to customize the dark theme.
 
 ## Print
 
@@ -267,23 +291,29 @@ WordPress applies `object-fit` to cover block images via a frontend script (`wp-
 
 `object-position` focal points (set via `data-object-position`) cannot be polyfilled with CSS alone since `attr()` is not yet supported for non-`content` properties in current browsers. The inline `style` attribute WordPress emits (`style="object-position: 52% 64%"`) handles this automatically — no workaround needed.
 
-### Accordion block interactivity (wp-block-accordion)
+### Accordion and Tabs content (wp-block-accordion, wp-block-tabs)
 
-The Accordion block (`core/accordion`, added in WordPress 6.7) uses the WordPress Interactivity API (`@wordpress/interactivity`) to toggle panels open and closed. This script does not run in headless environments, so all panels render with the `inert` attribute and stay hidden.
+WordPress marks closed accordion panels and inactive tab panels with `hidden`, and opens them with the Interactivity API (`@wordpress/interactivity`), which doesn't run in headless. Left alone, that content would be unreachable.
 
-`wp-block-styles` overrides `inert` with `display: block` so panel content remains accessible:
+`wp-block-styles` shows those panels, so accordions render fully expanded and tabs render as stacked sections under their tab list:
 
 ```css
-.wp-block-accordion-panel[inert] {
+.wp-block-accordion-panel[hidden],
+.wp-block-tab-panel[hidden] {
   display: block;
-  pointer-events: auto;
 }
 ```
 
-This means accordions render as fully expanded static sections rather than interactive collapsed panels. If you need interactive accordions in headless, either:
+If your front end toggles them itself, restore the hiding in your own CSS:
 
-- Use the **Details block** (`core/details`) instead — it uses native HTML `<details>`/`<summary>` elements with no JavaScript required
-- Wire up your own toggle with a small client-side script targeting `.wp-block-accordion-heading__toggle`
+```css
+.wp-block-accordion-panel[hidden],
+.wp-block-tab-panel[hidden] {
+  display: none;
+}
+```
+
+For collapsible content that works without JavaScript, use the **Details block** (`core/details`), which renders native `<details>`/`<summary>`.
 
 ### Conflict with Tailwind Typography (`prose`)
 
@@ -291,19 +321,23 @@ Do not apply Tailwind's `prose` class to the same element as `wp-content`. The `
 
 ### Social icons brand colors
 
-WordPress injects per-service background colors via its own frontend stylesheet, which does not load in headless. `wp-block-styles` includes fallback brand colors for all common services (`wp-social-link-github`, `wp-social-link-youtube`, `wp-social-link-twitter`, etc.) so icons render correctly without WordPress's stylesheet.
+WordPress injects per-service colors from its own frontend stylesheet, which doesn't load in headless. `wp-block-styles` includes WordPress's colors for every service it ships (`wp-social-link-github`, `wp-social-link-youtube`, …). In the "Logos only" style, near-black brands (GitHub, X, Threads, TikTok, …) use the text color instead, so they stay visible on dark pages.
 
 ### Checkmark list class name (`is-style-checkmark-list`)
 
 The Gutenberg editor emits `is-style-checkmark-list` for the checkmark list style. Earlier versions of this package targeted `is-style-checked-list` instead. Both are now supported for backwards compatibility.
 
-### Drop cap class inconsistency
+### Full-width blocks and scrollbars
 
-WordPress sometimes emits `has-drop-cap` on a paragraph without the accompanying `wp-block-paragraph` class. This package targets both forms so drop caps render correctly either way:
+`alignfull` blocks span `100vw`. On systems with always-visible scrollbars (Windows by default), `100vw` includes the scrollbar, so the page can scroll a few pixels sideways. If you use full-width blocks, clip horizontal overflow on your page:
 
 ```css
-.wp-block-paragraph.has-drop-cap::first-letter,
-.has-drop-cap::first-letter { ... }
+body { overflow-x: clip; }
 ```
 
-No action needed — this is handled automatically.
+## Upgrading to 2.0
+
+- **Dark mode now follows your site, not the visitor's OS.** If you relied on automatic dark mode, add `:root { color-scheme: light dark; }`. `data-theme="dark"` and `data-theme="light"` work as before.
+- **Dark-mode overrides:** the stylesheet no longer has `@media (prefers-color-scheme: dark)` blocks to override. Set dark values with `light-dark()` in your variables (see Customization).
+- **Content link styles no longer apply to buttons**, and block lists (social icons, latest posts, RSS, …) no longer get bullets or indentation. If you had CSS working around either, you can remove it.
+- **Removed** styles for the Form block, which isn't a core block, and for class names WordPress doesn't emit (`.wp-block-tab`, `.wp-block-file__textlink`, `.wp-block-breadcrumbs__separator`, `.wp-block-paragraph`).
