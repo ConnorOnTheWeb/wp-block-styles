@@ -1,0 +1,143 @@
+/*
+ * Test-page host styles.
+ *
+ * The test pages stand in for a site that uses wp-block-styles, so they
+ * declare their own color scheme like a real host would: they follow the OS
+ * by default, and the toggle in host.js pins light or dark through
+ * data-theme. Page chrome uses light-dark(), so it always matches the scheme
+ * the package is rendering in.
+ */
+:root {
+  color-scheme: light dark;
+  --host-bg: light-dark(#ffffff, #121417);
+  --host-fg: light-dark(#1a1a1a, #e6e6e6);
+  --host-muted: light-dark(#5f6368, #9aa0a6);
+  --host-rule: light-dark(#e3e3e3, #2b2f34);
+  --host-bar-bg: light-dark(rgb(255 255 255 / 0.9), rgb(18 20 23 / 0.9));
+  --host-control-bg: light-dark(#f1f3f4, #23272c);
+  --host-control-active: light-dark(#1a1a1a, #e6e6e6);
+  --host-control-active-fg: light-dark(#ffffff, #121417);
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
+body {
+  margin: 0;
+  background: var(--host-bg);
+  color: var(--host-fg);
+  font: 18px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Top bar: page title, page links, theme toggle */
+.host-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  padding: 0.6rem 16px;
+  background: var(--host-bar-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--host-rule);
+  font-size: 14px;
+}
+
+.host-bar h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.host-bar nav {
+  display: flex;
+  gap: 1rem;
+  margin-right: auto;
+}
+
+.host-bar nav a {
+  color: var(--host-muted);
+  text-decoration: none;
+}
+
+.host-bar nav a[aria-current="page"] {
+  color: var(--host-fg);
+  font-weight: 600;
+}
+
+.host-toggle {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 8px;
+  background: var(--host-control-bg);
+}
+
+.host-toggle button {
+  padding: 0.3rem 0.7rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--host-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.host-toggle button[aria-pressed="true"] {
+  background: var(--host-control-active);
+  color: var(--host-control-active-fg);
+}
+
+/* Page body */
+.host-intro {
+  max-width: 860px;
+  margin: 2rem auto 1rem;
+  padding: 0 16px;
+  color: var(--host-muted);
+  font-size: 15px;
+}
+
+.host-toc {
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  font-size: 14px;
+}
+
+.host-toc a {
+  color: var(--host-muted);
+}
+
+.host-section {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  padding: 0 16px;
+}
+
+.host-label {
+  margin: 0 0 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--host-rule);
+  color: var(--host-muted);
+  font: 600 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.host-label code {
+  font: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.8;
+}
+
+.host-note {
+  max-width: 860px;
+  margin: -0.5rem auto 1rem;
+  color: var(--host-muted);
+  font-size: 14px;
+}

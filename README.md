@@ -202,14 +202,25 @@ Print styles are included via `@media print`. Embeds are replaced with a `[Embed
 
 ## Testing
 
-Open `test.html` directly in a browser to visually verify all block types at once. No build step or server required — it loads `index.css` via a relative path and uses placeholder images from picsum.photos.
+The test pages in `tests/` open directly in a browser, with no build step or server, and work offline:
 
-Table layout has automated checks. `tests/tables.html` holds fixture tables (long headers, many columns, prose, URLs, numbers), each declaring the viewport width it must fit from and how many lines a cell may wrap to. The test renders them in Chromium, WebKit and Firefox at 320–1440px and fails on mid-word breaks, page-level horizontal scroll, tables that scroll when they should fit, runaway cell wrapping, text under 13px, or a sticky column or caption that drifts while scrolling:
+- **`tests/index.html`**: every block the package covers, in the markup WordPress actually emits (block save output, including the layout and palette classes WordPress adds).
+- **`tests/tables.html`**: table layout edge cases.
+
+Each page acts as its own host site. It follows your OS color scheme by default, and a System / Light / Dark toggle in the top bar pins either one, so you can check both themes.
+
+`npm test` renders the pages in Chromium, WebKit and Firefox and fails on any of these:
+
+- **Overflow:** the page scrolling sideways, checked at 320 to 1440px.
+- **Contrast:** text inside `.wp-content` below WCAG AA against what is actually behind it. This runs with the OS in light and in dark mode, and with the toggle forcing each theme against the opposite OS setting.
+- **Hidden content:** text WordPress marks `hidden` (closed accordion panels, inactive tabs) that headless readers can't reach.
+- **Screen-reader text:** `.screen-reader-text` showing up visibly.
+- **Tables:** on `tables.html`, words split mid-way, tables that scroll when they should fit, cells wrapping past their limit, text under 13px, and a sticky column or caption that drifts while scrolling. Each table declares its own limits.
 
 ```bash
 npx playwright install chromium webkit firefox   # once
-npm run test:tables
-BROWSERS=webkit WIDTHS=390 npm run test:tables  # narrow the run
+npm test
+BROWSERS=webkit PAGES=index MODES=dark npm test  # narrow the run
 ```
 
 Screenshots for a visual pass are written to `tests/screenshots/`.

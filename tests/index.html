@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Block Reference</title>
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="assets/host.css">
+<script src="assets/host.js"></script>
+</head>
+<body>
+<!--
+  Visual reference for every block wp-block-styles covers.
+
+  Markup is what WordPress emits in content.rendered (block save output and
+  server-rendered blocks), including the layout and palette classes
+  WordPress adds, so styles are checked against real-world HTML. Images are
+  local placeholders in assets/, so the page works offline.
+
+  Edge cases for individual blocks live on their own pages (tables.html).
+  tests/run.mjs checks every page for contrast in light and dark and for
+  horizontal page overflow. data-test-allow="contrast" exempts content whose
+  colors are the author's choice rather than the stylesheet's.
+-->
+<header class="host-bar">
+  <h1>wp-block-styles</h1>
+  <nav>
+    <a href="index.html" aria-current="page">All blocks</a>
+    <a href="tables.html">Tables</a>
+  </nav>
+  <div class="host-toggle" role="group" aria-label="Color scheme"></div>
+</header>
+
+<p class="host-intro">Every block wp-block-styles covers, in the markup WordPress emits through the REST API. Switch the color scheme to check both themes; <em>System</em> follows your OS.</p>
+
+<nav class="host-toc" aria-label="Blocks">
+  <a href="#paragraph">Paragraph</a> <a href="#heading">Heading</a> <a href="#list">List</a> <a href="#quote">Quote</a>
+  <a href="#pullquote">Pullquote</a> <a href="#code">Code</a> <a href="#preformatted">Preformatted</a> <a href="#verse">Verse</a>
+  <a href="#footnotes">Footnotes</a> <a href="#math">Math</a> <a href="#image">Image</a> <a href="#gallery">Gallery</a>
+  <a href="#video-audio">Video &amp; Audio</a> <a href="#embed">Embed</a> <a href="#media-text">Media &amp; Text</a> <a href="#cover">Cover</a>
+  <a href="#columns">Columns</a> <a href="#group">Group</a> <a href="#buttons">Buttons</a> <a href="#table">Table</a>
+  <a href="#separator">Separator &amp; Spacer</a> <a href="#file">File</a> <a href="#details">Details</a> <a href="#accordion">Accordion</a>
+  <a href="#tabs">Tabs</a> <a href="#social-links">Social Icons</a> <a href="#search">Search</a> <a href="#latest-posts">Latest Posts</a>
+  <a href="#latest-comments">Latest Comments</a> <a href="#rss">RSS</a> <a href="#breadcrumbs">Breadcrumbs</a> <a href="#icon">Icon</a>
+  <a href="#playlist">Playlist</a> <a href="#alignment">Alignment</a> <a href="#palette">Palette &amp; font sizes</a> <a href="#classic">Classic</a>
+</nav>
+
+<!-- ─── Text ───────────────────────────────────────────────────────────── -->
+
+<section class="host-section" id="paragraph">
+  <h2 class="host-label">Paragraph <code>core/paragraph</code></h2>
+  <div class="wp-content">
+    <p>A standard paragraph with a <a href="#paragraph">link</a>, <strong>bold</strong>, <em>italic</em>, <code>inline code</code>, <kbd>Ctrl</kbd> + <kbd>C</kbd>, H<sub>2</sub>O, x<sup>2</sup> and <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color" data-test-allow="contrast">inline text color</mark>. Paragraph blocks are saved as a bare &lt;p&gt; with no block class.</p>
+    <p class="has-drop-cap">Drop cap paragraph. The first letter is enlarged and floated to span several lines, which needs enough following text to wrap around it properly, so this sentence keeps going for a while longer than the others.</p>
+    <p class="has-text-align-center">Center-aligned paragraph.</p>
+    <p class="has-text-align-right">Right-aligned paragraph.</p>
+    <p class="has-large-font-size">Large font size paragraph.</p>
+    <!-- data-test-allow: a light background with no text color is the author's choice; it fails in any dark theme -->
+    <p class="has-pale-cyan-blue-background-color has-background" data-test-allow="contrast">Paragraph with a palette background color and no text color.</p>
+    <p class="has-white-color has-vivid-purple-background-color has-text-color has-background has-link-color">Paragraph with palette text and background colors and a <a href="#paragraph">link inside it</a>.</p>
+  </div>
+</section>
+
+<section class="host-section" id="heading">
+  <h2 class="host-label">Heading <code>core/heading</code></h2>
+  <div class="wp-content">
+    <h1 class="wp-block-heading">Heading level 1</h1>
+    <h2 class="wp-block-heading">Heading level 2</h2>
+    <p>Paragraph after a heading, to show the spacing between them.</p>
+    <h3 class="wp-block-heading">Heading level 3</h3>
+    <h4 class="wp-block-heading">Heading level 4</h4>
+    <h5 class="wp-block-heading">Heading level 5</h5>
+    <h6 class="wp-block-heading">Heading level 6</h6>
+    <h2 class="wp-block-heading has-text-align-center">Centered heading</h2>
+  </div>
+</section>
+
+<section class="host-section" id="list">
+  <h2 class="host-label">List <code>core/list</code></h2>
+  <div class="wp-content">
+    <ul class="wp-block-list">
+      <li>First item</li>
+      <li>Second item with a nested list
+        <ul class="wp-block-list">
+          <li>Nested item</li>
+          <li>Another nested item
+            <ul class="wp-block-list"><li>Third level</li></ul>
+          </li>
+        </ul>
+      </li>
+      <li>Third item</li>
+    </ul>
+    <ol class="wp-block-list">
+      <li>Ordered first</li>
+      <li>Ordered second
+        <ol class="wp-block-list"><li>Nested ordered</li><li>Nested ordered</li></ol>
+      </li>
+      <li>Ordered third</li>
+    </ol>
+    <ol class="wp-block-list" start="5" reversed><li>Reversed, starting at five</li><li>Four</li></ol>
+    <ul class="wp-block-list is-style-checkmark-list"><li>Checkmark list style (theme style variation)</li><li>Second checked item</li></ul>
+  </div>
+</section>
+
+<section class="host-section" id="quote">
+  <h2 class="host-label">Quote <code>core/quote</code></h2>
+  <div class="wp-content">
+    <blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+      <p>Design is not just what it looks like and feels like. Design is how it works.</p>
+      <cite>Steve Jobs</cite>
+    </blockquote>
+    <blockquote class="wp-block-quote is-style-large is-layout-flow wp-block-quote-is-layout-flow">
+      <p>Large quote style variation.</p>
+      <cite>Attribution</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="host-section" id="pullquote">
+  <h2 class="host-label">Pullquote <code>core/pullquote</code></h2>
+  <div class="wp-content">
+    <figure class="wp-block-pullquote"><blockquote><p>A pullquote draws the eye to a key passage.</p><cite>Attribution</cite></blockquote></figure>
+    <figure class="wp-block-pullquote has-white-color has-vivid-cyan-blue-background-color has-text-color has-background"><blockquote><p>Pullquote with palette colors.</p><cite>Attribution</cite></blockquote></figure>
+    <figure class="wp-block-pullquote is-style-solid-color"><blockquote><p>Solid color style variation (older themes).</p><cite>Attribution</cite></blockquote></figure>
+  </div>
+</section>
+
+<section class="host-section" id="code">
+  <h2 class="host-label">Code <code>core/code</code></h2>
+  <div class="wp-content">
+    <pre class="wp-block-code"><code>import 'wp-block-styles'
+
+export default function Post({ content }) {
+  return &lt;article className="wp-content" dangerouslySetInnerHTML={{ __html: content }} /&gt;
+}
+
+// A long line to check horizontal scrolling inside the block, without the page itself scrolling sideways at any width.</code></pre>
+  </div>
+</section>
+
+<section class="host-section" id="preformatted">
+  <h2 class="host-label">Preformatted <code>core/preformatted</code></h2>
+  <div class="wp-content">
+    <pre class="wp-block-preformatted">Preformatted text keeps
+    its   spacing   and line breaks,
+and wraps long lines instead of scrolling, so this line keeps going to show the wrapping behaviour.</pre>
+  </div>
+</section>
+
+<section class="host-section" id="verse">
+  <h2 class="host-label">Verse <code>core/verse</code></h2>
+  <div class="wp-content">
+    <pre class="wp-block-verse">The fog comes
+on little cat feet.
+
+It sits looking
+over harbor and city.</pre>
+  </div>
+</section>
+
+<section class="host-section" id="footnotes">
+  <h2 class="host-label">Footnotes <code>core/footnotes</code></h2>
+  <div class="wp-content">
+    <p>A sentence that cites a source<sup data-fn="fn-1" class="fn"><a href="#fn-1" id="fn-1-link">1</a></sup> and another<sup data-fn="fn-2" class="fn"><a href="#fn-2" id="fn-2-link">2</a></sup>.</p>
+    <ol class="wp-block-footnotes">
+      <li id="fn-1">First footnote, with its source. <a href="#fn-1-link" aria-label="Jump to footnote reference 1">↩︎</a></li>
+      <li id="fn-2">Second footnote. <a href="#fn-2-link" aria-label="Jump to footnote reference 2">↩︎</a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="host-section" id="math">
+  <h2 class="host-label">Math <code>core/math</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-math"><math display="block"><mrow><mi>x</mi><mo>=</mo><mfrac><mrow><mo>−</mo><mi>b</mi><mo>±</mo><msqrt><mrow><msup><mi>b</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>a</mi><mi>c</mi></mrow></msqrt></mrow><mrow><mn>2</mn><mi>a</mi></mrow></mfrac></mrow></math></div>
+  </div>
+</section>
+
+<!-- ─── Media ──────────────────────────────────────────────────────────── -->
+
+<section class="host-section" id="image">
+  <h2 class="host-label">Image <code>core/image</code></h2>
+  <div class="wp-content">
+    <figure class="wp-block-image size-large"><img decoding="async" width="1200" height="800" src="assets/landscape.svg" alt="Placeholder landscape" class="wp-image-101"/><figcaption class="wp-element-caption">Default image with a caption</figcaption></figure>
+    <figure class="wp-block-image aligncenter size-medium"><img decoding="async" width="300" height="200" src="assets/landscape.svg" alt="Placeholder landscape" class="wp-image-101"/><figcaption class="wp-element-caption">Center aligned, medium size</figcaption></figure>
+    <figure class="wp-block-image alignleft size-thumbnail is-resized"><img decoding="async" src="assets/square.svg" alt="Placeholder square" class="wp-image-102" style="width:160px"/></figure>
+    <p>Left-aligned image. Text wraps around the floated figure on wider screens and the float clears below. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <figure class="wp-block-image alignright size-thumbnail is-resized"><img decoding="async" src="assets/portrait.svg" alt="Placeholder portrait" class="wp-image-103" style="width:140px"/></figure>
+    <p>Right-aligned image, floated the other way. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+    <figure class="wp-block-image size-thumbnail is-style-rounded"><img decoding="async" width="150" height="150" src="assets/square.svg" alt="Placeholder square" class="wp-image-102"/></figure>
+    <figure class="wp-block-image size-large"><a href="#image"><img decoding="async" width="1200" height="800" src="assets/landscape.svg" alt="Linked placeholder" class="wp-image-101"/></a><figcaption class="wp-element-caption">Linked image</figcaption></figure>
+  </div>
+</section>
+
+<section class="host-section" id="gallery">
+  <h2 class="host-label">Gallery <code>core/gallery</code></h2>
+  <div class="wp-content">
+    <figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex wp-block-gallery-is-layout-flex">
+      <figure class="wp-block-image size-large"><img decoding="async" width="1200" height="800" src="assets/landscape.svg" alt="" class="wp-image-101"/></figure>
+      <figure class="wp-block-image size-large"><img decoding="async" width="800" height="1200" src="assets/portrait.svg" alt="" class="wp-image-103"/></figure>
+      <figure class="wp-block-image size-large"><img decoding="async" width="800" height="800" src="assets/square.svg" alt="" class="wp-image-102"/></figure>
+      <figure class="wp-block-image size-large"><img decoding="async" width="1600" height="700" src="assets/wide.svg" alt="" class="wp-image-104"/><figcaption class="wp-element-caption">Image caption</figcaption></figure>
+      <figure class="wp-block-image size-large"><img decoding="async" width="1200" height="800" src="assets/landscape.svg" alt="" class="wp-image-101"/></figure>
+      <figcaption class="blocks-gallery-caption wp-element-caption">Default gallery: cropped, default columns</figcaption>
+    </figure>
+    <figure class="wp-block-gallery has-nested-images columns-2 is-cropped wp-block-gallery-2 is-layout-flex wp-block-gallery-is-layout-flex">
+      <figure class="wp-block-image size-large"><img decoding="async" width="1200" height="800" src="assets/landscape.svg" alt="" class="wp-image-101"/></figure>
+      <figure class="wp-block-image size-large"><img decoding="async" width="800" height="800" src="assets/square.svg" alt="" class="wp-image-102"/></figure>
+      <figcaption class="blocks-gallery-caption wp-element-caption">Two columns</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="host-section" id="video-audio">
+  <h2 class="host-label">Video &amp; Audio <code>core/video</code> <code>core/audio</code></h2>
+  <div class="wp-content">
+    <figure class="wp-block-video"><video controls preload="none" poster="assets/landscape.svg"></video><figcaption class="wp-element-caption">Video with a poster image</figcaption></figure>
+    <figure class="wp-block-audio"><audio controls preload="none"></audio><figcaption class="wp-element-caption">Audio player</figcaption></figure>
+  </div>
+</section>
+
+<section class="host-section" id="embed">
+  <h2 class="host-label">Embed <code>core/embed</code></h2>
+  <div class="wp-content">
+    <figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+      <iframe title="Video embed placeholder" width="500" height="281" srcdoc="<style>html,body{margin:0;height:100%;display:grid;place-items:center;background:#2b2f34;color:#fff;font:16px system-ui}</style>16:9 video embed" frameborder="0" allowfullscreen></iframe>
+    </div><figcaption class="wp-element-caption">Video embed, 16:9</figcaption></figure>
+    <figure class="wp-block-embed is-type-video is-provider-vimeo wp-block-embed-vimeo wp-embed-aspect-4-3 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+      <iframe title="Video embed placeholder" width="500" height="375" srcdoc="<style>html,body{margin:0;height:100%;display:grid;place-items:center;background:#2b2f34;color:#fff;font:16px system-ui}</style>4:3 video embed" frameborder="0" allowfullscreen></iframe>
+    </div></figure>
+    <figure class="wp-block-embed is-type-rich is-provider-twitter wp-block-embed-twitter"><div class="wp-block-embed__wrapper">
+      <blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">An embedded post before the platform script loads. This is the fallback readers see while the embed loads, or if it never does.</p>&mdash; Example Account (@example) <a href="#embed">March 1, 2026</a></blockquote>
+    </div><figcaption class="wp-element-caption">X / Twitter embed, before its script loads</figcaption></figure>
+    <figure class="wp-block-embed is-type-rich is-provider-bluesky-social wp-block-embed-bluesky-social"><div class="wp-block-embed__wrapper">
+      <blockquote class="bluesky-embed" data-bluesky-uri="at://example" data-bluesky-cid="example"><p lang="en">A rich embed with no aspect ratio class. It should grow to fit its content rather than being cut off by a fixed-ratio box, even when the post runs to several lines of text like this one does.</p>&mdash; Example (<a href="#embed">@example.bsky.social</a>) <a href="#embed">March 2, 2026</a></blockquote>
+    </div></figure>
+  </div>
+</section>
+
+<section class="host-section" id="media-text">
+  <h2 class="host-label">Media &amp; Text <code>core/media-text</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-media-text is-stacked-on-mobile"><figure class="wp-block-media-text__media"><img decoding="async" width="1200" height="800" src="assets/landscape.svg" alt="" class="wp-image-101 size-full"/></figure><div class="wp-block-media-text__content">
+      <h3 class="wp-block-heading">Media on the left</h3>
+      <p>Default media and text: image left, content right, stacking on mobile.</p>
+    </div></div>
+    <div class="wp-block-media-text has-media-on-the-right is-stacked-on-mobile"><div class="wp-block-media-text__content">
+      <h3 class="wp-block-heading">Media on the right</h3>
+      <p>WordPress puts the content first in the markup when the media is on the right.</p>
+    </div><figure class="wp-block-media-text__media"><img decoding="async" width="800" height="800" src="assets/square.svg" alt="" class="wp-image-102 size-full"/></figure></div>
+    <div class="wp-block-media-text" style="grid-template-columns:30% auto"><figure class="wp-block-media-text__media"><img decoding="async" width="800" height="800" src="assets/square.svg" alt="" class="wp-image-102 size-full"/></figure><div class="wp-block-media-text__content">
+      <p>Not stacked on mobile, with a custom 30% media width. This should stay side by side on small screens.</p>
+    </div></div>
+    <div class="wp-block-media-text is-stacked-on-mobile is-image-fill-element"><figure class="wp-block-media-text__media"><img decoding="async" width="800" height="1200" src="assets/portrait.svg" alt="" class="wp-image-103 size-full" style="object-position:50% 50%"/></figure><div class="wp-block-media-text__content">
+      <p>Crop image to fill: the image should cover the whole media column, however tall the content gets.</p>
+      <p>Second paragraph to make the content taller than a landscape crop would be.</p>
+    </div></div>
+  </div>
+</section>
+
+<section class="host-section" id="cover">
+  <h2 class="host-label">Cover <code>core/cover</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-cover"><img decoding="async" class="wp-block-cover__image-background wp-image-104" alt="" src="assets/wide.svg" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-background-dim"></span><div class="wp-block-cover__inner-container is-layout-constrained wp-block-cover-is-layout-constrained">
+      <p class="has-text-align-center has-large-font-size">Cover with the default overlay</p>
+    </div></div>
+    <div class="wp-block-cover"><img decoding="async" class="wp-block-cover__image-background wp-image-104" alt="" src="assets/wide.svg" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-black-background-color has-background-dim-60 has-background-dim"></span><div class="wp-block-cover__inner-container is-layout-constrained wp-block-cover-is-layout-constrained">
+      <h2 class="wp-block-heading has-text-align-center">Black overlay at 60%</h2>
+      <p class="has-text-align-center">The image should still show through the overlay.</p>
+    </div></div>
+    <div class="wp-block-cover is-light"><img decoding="async" class="wp-block-cover__image-background wp-image-104" alt="" src="assets/wide.svg" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-white-background-color has-background-dim-70 has-background-dim"></span><div class="wp-block-cover__inner-container is-layout-constrained wp-block-cover-is-layout-constrained">
+      <p class="has-text-align-center">Light overlay: text switches to dark</p>
+    </div></div>
+    <div class="wp-block-cover" style="min-height:220px"><span aria-hidden="true" class="wp-block-cover__background has-vivid-cyan-blue-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container is-layout-constrained wp-block-cover-is-layout-constrained">
+      <p class="has-text-align-center">Solid color cover, no image</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ─── Design ─────────────────────────────────────────────────────────── -->
+
+<section class="host-section" id="columns">
+  <h2 class="host-label">Columns <code>core/columns</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">
+      <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow"><p>Equal column one. Stacks below 782px.</p></div>
+      <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow"><p>Equal column two.</p></div>
+    </div>
+    <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-2 wp-block-columns-is-layout-flex">
+      <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow" style="flex-basis:33.33%"><p>One third.</p></div>
+      <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow" style="flex-basis:66.66%"><p>Two thirds. These set widths plus the gap must stay on one row on desktop.</p></div>
+    </div>
+    <div class="wp-block-columns are-vertically-aligned-center is-not-stacked-on-mobile is-layout-flex wp-container-core-columns-is-layout-3 wp-block-columns-is-layout-flex">
+      <div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow"><p>Not stacked on mobile, vertically centered.</p></div>
+      <div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow"><p>Taller column.</p><p>Second paragraph.</p><p>Third paragraph.</p></div>
+      <div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow"><p>Third.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="host-section" id="group">
+  <h2 class="host-label">Group <code>core/group</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-group has-pale-cyan-blue-background-color has-background is-layout-constrained wp-block-group-is-layout-constrained" data-test-allow="contrast">
+      <h3 class="wp-block-heading">Group with a background</h3>
+      <p>Constrained layout: inner content keeps to the content width. Padding comes from the has-background class.</p>
+    </div>
+    <div class="wp-block-group is-content-justification-space-between is-nowrap is-layout-flex wp-container-core-group-is-layout-2 wp-block-group-is-layout-flex">
+      <p>Row, left</p><p>Row, right (space between, no wrap)</p>
+    </div>
+    <div class="wp-block-group is-vertical is-layout-flex wp-container-core-group-is-layout-3 wp-block-group-is-layout-flex">
+      <p>Stack, first</p><p>Stack, second</p>
+    </div>
+    <div class="wp-block-group is-layout-grid wp-container-core-group-is-layout-4 wp-block-group-is-layout-grid">
+      <p>Grid one</p><p>Grid two</p><p>Grid three</p><p>Grid four</p>
+    </div>
+  </div>
+</section>
+
+<section class="host-section" id="buttons">
+  <h2 class="host-label">Buttons <code>core/buttons</code> <code>core/button</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
+      <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#buttons">Default</a></div>
+      <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#buttons">Outline</a></div>
+      <div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button" href="#buttons">Fill</a></div>
+      <div class="wp-block-button"><a class="wp-block-button__link has-white-color has-vivid-purple-background-color has-text-color has-background has-link-color wp-element-button" href="#buttons">Palette colors</a></div>
+      <div class="wp-block-button"><a class="wp-block-button__link has-black-color has-luminous-vivid-amber-background-color has-text-color has-background has-link-color wp-element-button" href="#buttons">Light palette</a></div>
+    </div>
+    <div class="wp-block-buttons is-content-justification-center is-layout-flex wp-block-buttons-is-layout-flex">
+      <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#buttons">Centered</a></div>
+    </div>
+    <div class="wp-block-buttons is-content-justification-right is-layout-flex wp-block-buttons-is-layout-flex">
+      <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#buttons">Right aligned</a></div>
+    </div>
+    <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
+      <div class="wp-block-button has-custom-width wp-block-button__width-50"><a class="wp-block-button__link wp-element-button" href="#buttons">Half width</a></div>
+    </div>
+    <div class="wp-block-buttons is-vertical is-layout-flex wp-block-buttons-is-layout-flex">
+      <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#buttons">Vertical one</a></div>
+      <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#buttons">Vertical two</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="host-section" id="table">
+  <h2 class="host-label">Table <code>core/table</code></h2>
+  <p class="host-note">Layout edge cases: <a href="tables.html">tables.html</a>.</p>
+  <div class="wp-content">
+    <figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>Block</th><th>Category</th><th>Style variations</th></tr></thead><tbody>
+      <tr><td>Paragraph</td><td>Text</td><td>None</td></tr>
+      <tr><td>Image</td><td>Media</td><td>Default, Rounded</td></tr>
+      <tr><td>Quote</td><td>Text</td><td>Default, Large</td></tr>
+    </tbody></table><figcaption class="wp-element-caption">Default table</figcaption></figure>
+    <figure class="wp-block-table is-style-stripes"><table class="has-fixed-layout"><thead><tr><th>Package</th><th>Weekly downloads</th><th>Version</th></tr></thead><tbody>
+      <tr><td>alpha</td><td>1,000</td><td>1.0.0</td></tr>
+      <tr><td>beta</td><td>52,000</td><td>4.2.1</td></tr>
+      <tr><td>gamma</td><td>8,000</td><td>0.9.3</td></tr>
+    </tbody><tfoot><tr><td>Total</td><td>61,000</td><td></td></tr></tfoot></table><figcaption class="wp-element-caption">Stripes style with a footer</figcaption></figure>
+  </div>
+</section>
+
+<section class="host-section" id="separator">
+  <h2 class="host-label">Separator &amp; Spacer <code>core/separator</code> <code>core/spacer</code></h2>
+  <div class="wp-content">
+    <p>Default separator:</p>
+    <hr class="wp-block-separator has-alpha-channel-opacity"/>
+    <p>Wide separator:</p>
+    <hr class="wp-block-separator has-alpha-channel-opacity is-style-wide"/>
+    <p>Dots separator:</p>
+    <hr class="wp-block-separator has-alpha-channel-opacity is-style-dots"/>
+    <p>48px spacer below:</p>
+    <div style="height:48px" aria-hidden="true" class="wp-block-spacer"></div>
+    <p>After the spacer.</p>
+  </div>
+</section>
+
+<section class="host-section" id="file">
+  <h2 class="host-label">File <code>core/file</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-file"><a id="wp-block-file--media-201" href="#file">annual-report-2026.pdf</a><a href="#file" class="wp-block-file__button wp-element-button" download aria-describedby="wp-block-file--media-201">Download</a></div>
+    <div class="wp-block-file"><a id="wp-block-file--media-202" href="#file">a-file-with-a-much-longer-name-than-usual-to-check-wrapping.zip</a><a href="#file" class="wp-block-file__button wp-element-button" download aria-describedby="wp-block-file--media-202">Download</a></div>
+  </div>
+</section>
+
+<!-- ─── Interactive ────────────────────────────────────────────────────── -->
+
+<section class="host-section" id="details">
+  <h2 class="host-label">Details <code>core/details</code></h2>
+  <div class="wp-content">
+    <details class="wp-block-details is-layout-flow wp-block-details-is-layout-flow"><summary>What is a headless WordPress setup?</summary><p>WordPress manages the content and a separate front end renders it, fetching posts through the REST API.</p></details>
+    <details class="wp-block-details is-layout-flow wp-block-details-is-layout-flow" open><summary>Open by default</summary><p>This one starts expanded.</p></details>
+  </div>
+</section>
+
+<section class="host-section" id="accordion">
+  <h2 class="host-label">Accordion <code>core/accordion</code></h2>
+  <p class="host-note">Rendered as WordPress sends it: closed panels carry <code>hidden</code>, and the Interactivity API script that toggles them doesn't run in headless.</p>
+  <div class="wp-content">
+    <div role="group" class="wp-block-accordion" data-wp-interactive="core/accordion">
+      <div class="wp-block-accordion-item is-open" data-wp-class--is-open="state.isOpen">
+        <h3 class="wp-block-accordion-heading has-icon has-icon-right"><button type="button" class="wp-block-accordion-heading__toggle" id="acc-1" aria-controls="acc-1-panel" aria-expanded="true"><span class="wp-block-accordion-heading__toggle-title">Open item</span><span class="wp-block-accordion-heading__toggle-icon" aria-hidden="true">+</span></button></h3>
+        <div role="region" class="wp-block-accordion-panel" id="acc-1-panel" aria-labelledby="acc-1"><p>Content of the item that is open by default.</p></div>
+      </div>
+      <div class="wp-block-accordion-item" data-wp-class--is-open="state.isOpen">
+        <h3 class="wp-block-accordion-heading has-icon has-icon-right"><button type="button" class="wp-block-accordion-heading__toggle" id="acc-2" aria-controls="acc-2-panel" aria-expanded="false"><span class="wp-block-accordion-heading__toggle-title">Closed item</span><span class="wp-block-accordion-heading__toggle-icon" aria-hidden="true">+</span></button></h3>
+        <div role="region" class="wp-block-accordion-panel" id="acc-2-panel" aria-labelledby="acc-2" hidden><p>Content of a closed item. Without the toggle script, readers can only reach this if it is shown.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="host-section" id="tabs">
+  <h2 class="host-label">Tabs <code>core/tabs</code></h2>
+  <p class="host-note">As WordPress sends it: inactive panels carry <code>hidden</code> and the tab buttons need the Interactivity API to switch panels.</p>
+  <div class="wp-content">
+    <div class="wp-block-tabs" data-wp-interactive="core/tabs">
+      <div role="tablist" class="wp-block-tab-list" aria-label="Tabbed content"><button id="tab__tab-1" aria-controls="tab-1" aria-selected="true" tabindex="0">Overview</button><button id="tab__tab-2" aria-controls="tab-2" aria-selected="false" tabindex="-1">Details</button><button id="tab__tab-3" aria-controls="tab-3" aria-selected="false" tabindex="-1">Pricing</button></div>
+      <div class="wp-block-tab-panels">
+        <section role="tabpanel" tabindex="0" class="wp-block-tab-panel" id="tab-1" aria-labelledby="tab__tab-1"><p>Overview panel content.</p></section>
+        <section role="tabpanel" tabindex="0" class="wp-block-tab-panel" id="tab-2" aria-labelledby="tab__tab-2" hidden><p>Details panel content.</p></section>
+        <section role="tabpanel" tabindex="0" class="wp-block-tab-panel" id="tab-3" aria-labelledby="tab__tab-3" hidden><p>Pricing panel content.</p></section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Widgets ────────────────────────────────────────────────────────── -->
+
+<section class="host-section" id="social-links">
+  <h2 class="host-label">Social Icons <code>core/social-links</code></h2>
+  <div class="wp-content">
+    <ul class="wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex">
+      <li class="wp-social-link wp-social-link-github wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg><span class="wp-block-social-link-label screen-reader-text">GitHub</span></a></li>
+      <li class="wp-social-link wp-social-link-x wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="3"/></svg><span class="wp-block-social-link-label screen-reader-text">X</span></a></li>
+      <li class="wp-social-link wp-social-link-youtube wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M9 7v10l8-5z"/></svg><span class="wp-block-social-link-label screen-reader-text">YouTube</span></a></li>
+      <li class="wp-social-link wp-social-link-mastodon wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect x="5" y="5" width="14" height="14" rx="4"/></svg><span class="wp-block-social-link-label screen-reader-text">Mastodon</span></a></li>
+    </ul>
+    <ul class="wp-block-social-links has-large-icon-size is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex">
+      <li class="wp-social-link wp-social-link-github wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg><span class="wp-block-social-link-label screen-reader-text">GitHub</span></a></li>
+      <li class="wp-social-link wp-social-link-youtube wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M9 7v10l8-5z"/></svg><span class="wp-block-social-link-label screen-reader-text">YouTube</span></a></li>
+    </ul>
+    <ul class="wp-block-social-links has-visible-labels is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex">
+      <li class="wp-social-link wp-social-link-github wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg><span class="wp-block-social-link-label">GitHub</span></a></li>
+      <li class="wp-social-link wp-social-link-mastodon wp-block-social-link"><a href="#social-links" class="wp-block-social-link-anchor"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect x="5" y="5" width="14" height="14" rx="4"/></svg><span class="wp-block-social-link-label">Mastodon</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="host-section" id="search">
+  <h2 class="host-label">Search <code>core/search</code></h2>
+  <div class="wp-content">
+    <form role="search" method="get" action="#search" class="wp-block-search__button-outside wp-block-search__text-button wp-block-search"><label class="wp-block-search__label" for="wp-block-search__input-1">Search</label><div class="wp-block-search__inside-wrapper"><input class="wp-block-search__input" id="wp-block-search__input-1" placeholder="" value="" type="search" name="s" required/><button aria-label="Search" class="wp-block-search__button wp-element-button" type="submit">Search</button></div></form>
+    <form role="search" method="get" action="#search" class="wp-block-search__button-inside wp-block-search__text-button wp-block-search"><label class="wp-block-search__label screen-reader-text" for="wp-block-search__input-2">Search</label><div class="wp-block-search__inside-wrapper"><input class="wp-block-search__input" id="wp-block-search__input-2" placeholder="Button inside, hidden label" value="" type="search" name="s" required/><button aria-label="Search" class="wp-block-search__button wp-element-button" type="submit">Search</button></div></form>
+  </div>
+</section>
+
+<section class="host-section" id="latest-posts">
+  <h2 class="host-label">Latest Posts <code>core/latest-posts</code></h2>
+  <div class="wp-content">
+    <ul class="wp-block-latest-posts__list has-dates wp-block-latest-posts">
+      <li><a class="wp-block-latest-posts__post-title" href="#latest-posts">Getting started with headless WordPress</a><time datetime="2026-03-01T10:00:00+00:00" class="wp-block-latest-posts__post-date">March 1, 2026</time><div class="wp-block-latest-posts__post-excerpt">A short introduction to fetching posts from the REST API … <a class="wp-block-latest-posts__read-more" href="#latest-posts">Read more<span class="screen-reader-text">: Getting started with headless WordPress</span></a></div></li>
+      <li><a class="wp-block-latest-posts__post-title" href="#latest-posts">Styling block content</a><time datetime="2026-02-12T10:00:00+00:00" class="wp-block-latest-posts__post-date">February 12, 2026</time><div class="wp-block-latest-posts__post-excerpt">Why rendered blocks arrive unstyled, and what to do about it … <a class="wp-block-latest-posts__read-more" href="#latest-posts">Read more<span class="screen-reader-text">: Styling block content</span></a></div></li>
+    </ul>
+    <ul class="wp-block-latest-posts__list is-grid columns-3 has-dates wp-block-latest-posts">
+      <li><a class="wp-block-latest-posts__post-title" href="#latest-posts">Grid post one</a><time datetime="2026-03-01T10:00:00+00:00" class="wp-block-latest-posts__post-date">March 1, 2026</time></li>
+      <li><a class="wp-block-latest-posts__post-title" href="#latest-posts">Grid post two</a><time datetime="2026-02-20T10:00:00+00:00" class="wp-block-latest-posts__post-date">February 20, 2026</time></li>
+      <li><a class="wp-block-latest-posts__post-title" href="#latest-posts">Grid post three</a><time datetime="2026-02-12T10:00:00+00:00" class="wp-block-latest-posts__post-date">February 12, 2026</time></li>
+    </ul>
+  </div>
+</section>
+
+<section class="host-section" id="latest-comments">
+  <h2 class="host-label">Latest Comments <code>core/latest-comments</code></h2>
+  <div class="wp-content">
+    <ol class="has-avatars has-dates has-excerpts wp-block-latest-comments">
+      <li class="wp-block-latest-comments__comment"><img alt="" src="assets/square.svg" class="avatar avatar-48 photo wp-block-latest-comments__comment-avatar" height="48" width="48"/><article><footer class="wp-block-latest-comments__comment-meta"><a class="wp-block-latest-comments__comment-author" href="#latest-comments">Sam Rivera</a> on <a class="wp-block-latest-comments__comment-link" href="#latest-comments">Getting started with headless WordPress</a><time datetime="2026-03-02T09:00:00+00:00" class="wp-block-latest-comments__comment-date">March 2, 2026</time></footer><div class="wp-block-latest-comments__comment-excerpt"><p>Thanks, this cleared up how the REST API returns rendered content.</p></div></article></li>
+      <li class="wp-block-latest-comments__comment"><img alt="" src="assets/square.svg" class="avatar avatar-48 photo wp-block-latest-comments__comment-avatar" height="48" width="48"/><article><footer class="wp-block-latest-comments__comment-meta"><a class="wp-block-latest-comments__comment-author" href="#latest-comments">Alex Kim</a> on <a class="wp-block-latest-comments__comment-link" href="#latest-comments">Styling block content</a><time datetime="2026-02-14T09:00:00+00:00" class="wp-block-latest-comments__comment-date">February 14, 2026</time></footer><div class="wp-block-latest-comments__comment-excerpt"><p>Is there a way to scope the styles to one component?</p></div></article></li>
+    </ol>
+  </div>
+</section>
+
+<section class="host-section" id="rss">
+  <h2 class="host-label">RSS <code>core/rss</code></h2>
+  <div class="wp-content">
+    <ul class="wp-block-rss">
+      <li class="wp-block-rss__item"><div class="wp-block-rss__item-title"><a href="#rss">Feed item title</a></div><time datetime="2026-03-03T08:00:00+00:00" class="wp-block-rss__item-publish-date">March 3, 2026</time> <span class="wp-block-rss__item-author">by Jordan Lee</span><div class="wp-block-rss__item-excerpt">A short excerpt from the feed item, trimmed by WordPress to the configured length …</div></li>
+      <li class="wp-block-rss__item"><div class="wp-block-rss__item-title"><a href="#rss">Second feed item</a></div><time datetime="2026-02-27T08:00:00+00:00" class="wp-block-rss__item-publish-date">February 27, 2026</time></li>
+    </ul>
+  </div>
+</section>
+
+<section class="host-section" id="breadcrumbs">
+  <h2 class="host-label">Breadcrumbs <code>core/breadcrumbs</code></h2>
+  <div class="wp-content">
+    <nav class="wp-block-breadcrumbs" aria-label="Breadcrumbs"><ol><li><a href="#breadcrumbs">Home</a></li><li><a href="#breadcrumbs">Blog</a></li><li><span aria-current="page">Styling block content</span></li></ol></nav>
+    <nav class="wp-block-breadcrumbs" aria-label="Breadcrumbs" style="--separator:'›'"><ol><li><a href="#breadcrumbs">Home</a></li><li><a href="#breadcrumbs">Docs</a></li><li><span aria-current="page">Custom separator</span></li></ol></nav>
+  </div>
+</section>
+
+<section class="host-section" id="icon">
+  <h2 class="host-label">Icon <code>core/icon</code></h2>
+  <div class="wp-content">
+    <div class="wp-block-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M12 3l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L3.3 9.2l6.1-.6z"/></svg></div>
+  </div>
+</section>
+
+<section class="host-section" id="playlist">
+  <h2 class="host-label">Playlist <code>core/playlist</code></h2>
+  <div class="wp-content">
+    <figure class="wp-block-playlist">
+      <ol class="wp-block-playlist__tracklist">
+        <li class="wp-block-playlist-track"><button class="wp-block-playlist-track__button" aria-current="true"><img class="wp-block-playlist-track__image" src="assets/square.svg" alt=""/><span class="wp-block-playlist-track__content"><span class="wp-block-playlist-track__title">First track</span><span class="wp-block-playlist-track__artist">Example Artist</span></span><span class="wp-block-playlist-track__length"><span class="screen-reader-text">Duration: </span>3:42</span><span class="screen-reader-text">Play First track</span></button></li>
+        <li class="wp-block-playlist-track"><button class="wp-block-playlist-track__button"><img class="wp-block-playlist-track__image" src="assets/square.svg" alt=""/><span class="wp-block-playlist-track__content"><span class="wp-block-playlist-track__title">Second track</span><span class="wp-block-playlist-track__artist">Example Artist</span></span><span class="wp-block-playlist-track__length"><span class="screen-reader-text">Duration: </span>4:05</span><span class="screen-reader-text">Play Second track</span></button></li>
+      </ol>
+      <figcaption class="wp-element-caption">Playlist</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ─── Utilities ──────────────────────────────────────────────────────── -->
+
+<section class="host-section" id="alignment">
+  <h2 class="host-label">Alignment <code>alignwide</code> <code>alignfull</code></h2>
+  <div class="wp-content">
+    <p>Content-width paragraph for comparison.</p>
+    <div class="wp-block-group alignwide has-pale-cyan-blue-background-color has-background is-layout-constrained wp-block-group-is-layout-constrained" data-test-allow="contrast"><p>Wide group: breaks out to the wide width.</p></div>
+    <div class="wp-block-cover alignfull" style="min-height:200px"><span aria-hidden="true" class="wp-block-cover__background has-vivid-cyan-blue-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container is-layout-constrained wp-block-cover-is-layout-constrained"><p class="has-text-align-center">Full-width cover: edge to edge, with no sideways page scroll.</p></div></div>
+  </div>
+</section>
+
+<section class="host-section" id="palette">
+  <h2 class="host-label">Palette &amp; font sizes <code>has-*-color</code> <code>has-*-font-size</code></h2>
+  <div class="wp-content">
+    <p class="has-small-font-size">Small font size</p>
+    <p class="has-medium-font-size">Medium font size</p>
+    <p class="has-large-font-size">Large font size</p>
+    <p class="has-x-large-font-size">Extra large font size</p>
+    <p class="has-black-color has-white-background-color has-text-color has-background">Black on white</p>
+    <p class="has-white-color has-black-background-color has-text-color has-background">White on black</p>
+    <p class="has-vivid-red-color has-text-color" data-test-allow="contrast">Vivid red text (palette color, author's choice)</p>
+  </div>
+</section>
+
+<section class="host-section" id="classic">
+  <h2 class="host-label">Classic editor content <code>wp-caption</code></h2>
+  <div class="wp-content">
+    <div id="attachment_301" style="width: 310px" class="wp-caption aligncenter"><img aria-describedby="caption-attachment-301" decoding="async" src="assets/landscape.svg" alt="" width="300" height="200" class="size-medium wp-image-301"/><p id="caption-attachment-301" class="wp-caption-text">Legacy [caption] shortcode output</p></div>
+    <p>Classic content is plain HTML with <a href="#classic">links</a> and <strong>formatting</strong>.</p>
+  </div>
+</section>
+</body>
+</html>

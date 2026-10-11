@@ -5,6 +5,12 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Test pages moved to `tests/`: `tests/index.html` replaces `test.html`, uses the markup WordPress actually emits for every block, covers the WordPress 7.0 blocks, and loads local images instead of picsum.photos
+- Test pages act as their own host: they follow the OS color scheme, with a System / Light / Dark toggle
+- `npm test` (replaces `npm run test:tables`) adds contrast checks in light and dark, page overflow checks, and checks for hidden or visible screen-reader content across all test pages
+
 ## [1.0.22] — 2026-10-11
 
 - Tables fill the content column instead of sizing to their content, so tables that previously scrolled on desktop now fit

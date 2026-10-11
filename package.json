@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "npx clean-css-cli index.css -o index.min.css",
-    "test:tables": "node tests/tables.test.mjs"
+    "test": "node tests/run.mjs"
   },
   "keywords": [
     "wordpress",
