@@ -5,6 +5,17 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] — 2026-10-11
+
+- Table column alignment set in the editor now applies (`has-text-align-*` on cells was overridden)
+- Table border color set in the editor now reaches the cells
+- Tables with their own text or background colors: header, stripes and rules tint from the table's text color instead of keeping light grey fills (light text on light grey before)
+- Table footer set apart with a heavier rule and semibold text
+- Tables use tabular figures so numbers line up
+- Striped tables drop their (transparent) side borders, so horizontal rules meet cleanly
+- Table corner cell (first header cell) aligns to the top, so it no longer sits low beside wrapped column headers
+- Tests: table fixtures for column alignment, colored tables, border color and footers; checks that alignment and border color reach the cells
+
 ## [2.0.0] — 2026-10-11
 
 Breaking: dark mode follows the host site instead of the visitor's OS. See "Upgrading to 2.0" in the README.

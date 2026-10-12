@@ -14,6 +14,8 @@
  *                inactive tabs) must still be readable, since the script that
  *                reveals it doesn't run in headless
  *   - sr-text    .screen-reader-text must not render visibly
+ *   - table settings  column alignment and border color set in the editor
+ *                must reach the table cells
  *
  * Content whose colors are the author's choice, not the stylesheet's, is
  * marked data-test-allow="contrast" in the fixture and skipped.
@@ -140,7 +142,22 @@ function contentChecks() {
     .filter(el => { const r = el.getBoundingClientRect(); return r.width > 1 && r.height > 1 })
     .map(el => `${describe(el)} is visible`)
 
-  return { contrast, hidden, srText }
+  // WordPress table settings: column alignment classes and an editor border
+  // color must reach the cells
+  const tableSettings = []
+  for (const cell of document.querySelectorAll('.wp-block-table :is(th, td)[class*="has-text-align-"]')) {
+    const want = cell.className.match(/has-text-align-(left|center|right)/)[1]
+    const got = getComputedStyle(cell).textAlign
+    if (got !== want) tableSettings.push(`${describe(cell)} is text-align ${got}, not ${want}`)
+  }
+  for (const table of document.querySelectorAll('.wp-block-table table.has-border-color')) {
+    const want = getComputedStyle(table).borderTopColor
+    const cell = table.querySelector('td')
+    const got = getComputedStyle(cell).borderBottomColor
+    if (got !== want) tableSettings.push(`${describe(cell)} border is ${got}, not the table's ${want}`)
+  }
+
+  return { contrast, hidden, srText, tableSettings }
 }
 
 function tableChecks(MIN_FONT_PX) {
@@ -248,11 +265,12 @@ for (const engine of browsers) {
         const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 2, colorScheme })
         await page.goto(`${url}?theme=${theme}`)
         const where = `${engine} ${name}.html ${mode} @ ${width}px`
-        const { contrast, hidden, srText } = await page.evaluate(contentChecks)
+        const { contrast, hidden, srText, tableSettings } = await page.evaluate(contentChecks)
         for (const c of contrast) fail(where, `contrast: ${c}`)
         for (const h of hidden) fail(where, `hidden: ${h}`)
         for (const t of srText) fail(where, `sr-text: ${t}`)
-        console.log(`${where}: ${contrast.length + hidden.length + srText.length ? '✗' : '✓'}`)
+        for (const t of tableSettings) fail(where, `table settings: ${t}`)
+        console.log(`${where}: ${contrast.length + hidden.length + srText.length + tableSettings.length ? '✗' : '✓'}`)
         await page.screenshot({ path: join(shots, `${name}-${engine}-${mode}-${width}.png`), fullPage: true })
         await page.close()
       }

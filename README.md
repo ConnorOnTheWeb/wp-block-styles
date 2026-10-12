@@ -183,8 +183,13 @@ Tables are tuned to show as much as possible without becoming unreadable:
 - **Type scales with the space.** Table text steps down smoothly from `0.95em` in a full desktop column to about `0.75em` (never below 13px) in a phone-width column. This is based on the table's container, not the viewport, so it works in sidebars and columns too.
 - **On phones, labels stay put.** In narrow containers the first column sticks while the rest scrolls, and the trailing edge fades while there's more to see (Chrome, Edge and Safari 26+; other browsers simply scroll).
 - **Equal-width columns are ignored.** WordPress's "Fixed width table cells" option (`has-fixed-layout`) is on by default and forces every column to the same width, so auto layout is used regardless.
+- **Editor settings carry through.** Column alignment, border color and the table's own text and background colors all apply. In a colored table, the header, stripes and rules are tinted from its text color, so they read on any background.
+- **Numbers line up.** Digits are equal width (`tabular-nums`), and the footer section is set apart from the body with a heavier rule.
+- **The corner cell sits top-left.** The first header cell labels the row-label column, so it aligns to the top while the other headers sit on their shared bottom line.
 
 Print output shows the full table with no scroll container.
+
+**Keyboard scrolling in Safari:** Chrome and Firefox let keyboard users focus a wide table and scroll it with the arrow keys. Safari only does that for focusable elements. If you render content yourself, adding `tabindex="0"` to each `figure.wp-block-table` makes wide tables scrollable by keyboard everywhere.
 
 ## Caching
 

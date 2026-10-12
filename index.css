@@ -1069,6 +1069,8 @@
   border-top: 1px solid var(--wp-border-color);
   font-size: clamp(max(0.75em, 13px), 0.68em + 0.5cqi, 0.95em);
   line-height: 1.4;
+  /* equal-width digits, so figures line up down a column */
+  font-variant-numeric: tabular-nums;
 }
 
 /* Column count, for the width floor above */
@@ -1099,6 +1101,12 @@
   border-left: 1px solid var(--wp-border-color);
 }
 
+/* Column alignment set in the editor (WordPress adds the class to every cell
+   in the column; data-align on older content) */
+.wp-block-table :is(th, td):is(.has-text-align-left, [data-align="left"]) { text-align: left; }
+.wp-block-table :is(th, td):is(.has-text-align-center, [data-align="center"]) { text-align: center; }
+.wp-block-table :is(th, td):is(.has-text-align-right, [data-align="right"]) { text-align: right; }
+
 /* Long URLs may break anywhere rather than widening their column */
 .wp-block-table td a {
   overflow-wrap: anywhere;
@@ -1113,6 +1121,12 @@
   font-size: 0.92em;
   line-height: 1.3;
   vertical-align: bottom;
+}
+
+/* The corner cell heads the row labels and scopes the whole table, so it sits
+   top-left rather than on the column headers' shared bottom line */
+.wp-block-table thead tr > :first-child {
+  vertical-align: top;
 }
 
 .wp-block-table tbody tr > :first-child {
@@ -1130,6 +1144,73 @@
 .wp-block-table.is-style-stripes th,
 .wp-block-table.is-style-stripes td {
   border-color: transparent;
+}
+
+/* No side borders at all, so horizontal rules (footer) meet without notches */
+.wp-block-table.is-style-stripes tr > * {
+  border-left-width: 0;
+  border-right-width: 0;
+}
+
+/* Footer: set apart from the body by a heavier rule */
+.wp-block-table table:has(tfoot) tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.wp-block-table tfoot :is(td, th),
+.wp-block-table.is-style-stripes tfoot :is(td, th) {
+  border-top: 2px solid var(--wp-border-color);
+  font-weight: 600;
+}
+
+/* Border color set in the editor: WordPress puts it on <table> and every
+   cell inherits it */
+.wp-block-table .has-border-color :is(thead, tbody, tfoot, tr, th, td),
+.wp-block-table.is-style-stripes .has-border-color :is(th, td) {
+  border-color: inherit;
+}
+
+/* Tables with their own colors: header, stripes, footer rule and cell borders
+   tint from the table's text color, so they read on any background. The
+   tint is an inset shadow so cells keep the table's background color
+   underneath (and stay opaque when the first column is sticky). */
+.wp-block-table table:is(.has-background, .has-text-color) {
+  --wp-table-tint: color-mix(in srgb, currentColor 9%, transparent);
+  --wp-table-line: color-mix(in srgb, currentColor 22%, transparent);
+  border-top-color: var(--wp-table-line);
+}
+
+.wp-block-table table:is(.has-background, .has-text-color) :is(thead, tbody, tfoot, tr) {
+  background-color: inherit;
+}
+
+/* Header a step stronger than the stripes, so they don't merge */
+.wp-block-table table:is(.has-background, .has-text-color) thead {
+  --wp-table-tint: color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.wp-block-table table:is(.has-background, .has-text-color) :is(th, td) {
+  border-color: var(--wp-table-line);
+}
+
+.wp-block-table table:is(.has-background, .has-text-color) th,
+.wp-block-table.is-style-stripes table:is(.has-background, .has-text-color) tbody tr:nth-child(odd) td {
+  background-color: inherit;
+  box-shadow: inset 0 0 0 100vmax var(--wp-table-tint);
+}
+
+.wp-block-table.is-style-stripes table:is(.has-background, .has-text-color) :is(th, td) {
+  border-color: transparent;
+}
+
+/* An inset shadow stops at the border, so tinted cells get a tint-colored
+   border to close the gap */
+.wp-block-table.is-style-stripes table:is(.has-background, .has-text-color) :is(th, tbody tr:nth-child(odd) td) {
+  border-color: var(--wp-table-tint);
+}
+
+.wp-block-table.is-style-stripes table:is(.has-background, .has-text-color) tfoot :is(td, th) {
+  border-top-color: var(--wp-table-line);
 }
 
 .wp-block-table figcaption,
@@ -1168,6 +1249,21 @@
   /* Stripes have no cell borders, so mark the sticky edge */
   .wp-block-table.is-style-stripes tr > :first-child {
     box-shadow: 1px 0 0 var(--wp-border-color);
+  }
+
+  /* Striped, own colors: the sticky edge line has to sit alongside the tint */
+  .wp-block-table.is-style-stripes table:is(.has-background, .has-text-color) tr > :first-child {
+    box-shadow: 1px 0 0 var(--wp-table-line);
+  }
+
+  .wp-block-table.is-style-stripes table:is(.has-background, .has-text-color) :is(th, tbody tr:nth-child(odd) td):first-child {
+    box-shadow: inset 0 0 0 100vmax var(--wp-table-tint), 1px 0 0 var(--wp-table-line);
+  }
+
+  /* Own colors: the sticky column takes the table's background */
+  .wp-block-table table.has-background tr > :first-child,
+  .wp-block-table.is-style-stripes table.has-background tbody tr > td:first-child {
+    background-color: inherit;
   }
 }
 
